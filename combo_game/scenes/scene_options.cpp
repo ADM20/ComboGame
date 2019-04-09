@@ -1,25 +1,24 @@
-#include "scene_menu.h"
+#include "scene_options.h"
 #include "../components/cmp_text.h"
 #include "../game.h"
 #include <SFML/Window/Keyboard.hpp>
 #include <iostream>
 #include <system_renderer.h>
 
-
 using namespace std;
 using namespace sf;
 
-
-void MenuScene::Load() {
-  cout << "Menu Load \n";
+void OptionsScene::Load() {
+  cout << "Options Load \n";
   {
     auto txt = makeEntity();
-    auto t = txt->addComponent<TextComponent>("Platformer \n1 - Load Test Level \n2 - Options");
+    auto t = txt->addComponent<TextComponent>("Options Menu \n\n 1 - Keybinds \n 2 - Resolution \n  \n 3 - Menu");
   }
   setLoaded(true);
 }
 
-void MenuScene::Update(const double& dt) {
+void OptionsScene::Update(const double& dt) {
+  //cout << "options Update "<<dt<<"\n";
 	bool flag = true;
 	RenderWindow &window = Engine::GetWindow();
 	while (flag)
@@ -33,15 +32,17 @@ void MenuScene::Update(const double& dt) {
 				switch (event.key.code)
 				{
 				case sf::Keyboard::Num1:
-					Engine::ChangeScene(&level3);
+					//call keybind scene
 					flag = false;
 					break;
-
 				case sf::Keyboard::Num2:
-					Engine::ChangeScene(&optionsMenu);
+					//call resolution selection scene
 					flag = false;
 					break;
-					// Don't forget to check for other events here
+				case sf::Keyboard::Num3:
+					Engine::ChangeScene(&menu);
+					flag = false;
+					break;
 				}
 			}
 		}
