@@ -1,5 +1,5 @@
 # ComboGame
-[![Build status](https://ci.appveyor.com/api/projects/status/uoinrwwxiqj7haom?svg=true)](https://ci.appveyor.com/project/ADM20/combogame)
+[![Build status](https://ci.appveyor.com/api/projects/status/9i0w0nt8xk3tbbwb?svg=true)](https://ci.appveyor.com/project/ADM20/combogame)
 <img src = "https://img.shields.io/badge/don't%20break-master-yellow.svg" alt  = "don't break master">
 
 Repo for development of Games Engineering combo game
