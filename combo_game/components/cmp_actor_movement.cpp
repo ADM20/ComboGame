@@ -5,7 +5,23 @@
 using namespace sf;
 using namespace std;
 
-void ActorMovementComponent::update(double dt) {}
+void ActorMovementComponent::update(double dt) 
+{
+	if (Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::D))
+	{
+		
+		//step right
+		if (Keyboard::isKeyPressed(Keyboard::D)) 
+		{
+			std::cout << "Move Right" << endl;
+		}
+		//step left
+		else 
+		{
+			std::cout << "Move Left" << endl;
+		}
+	}
+}
 
 ActorMovementComponent::ActorMovementComponent(Entity* p)
     : _speed(100.0f), Component(p) {}
