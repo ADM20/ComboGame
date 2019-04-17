@@ -5,22 +5,49 @@
 using namespace sf;
 using namespace std;
 
+static double elapsed = 0;
+double tempo = .5;
+double grace = 0.5;
+bool flag = true;
+
 void ActorMovementComponent::update(double dt) 
 {
-	if (Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::D))
+	
+	elapsed -= dt;
+
+	if (((0-grace)<elapsed <=(0+grace))&&flag == true)
 	{
+		std::cout << "NOW!" << endl;
+		if (Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::D))
+		{
+			//step right
+			if (Keyboard::isKeyPressed(Keyboard::D))
+			{
+				std::cout << "Move Right" << endl;
+			}
+			//step left
+			else
+			{
+				std::cout << "Move Left" << endl;
+			}
+			flag = false;
+			elapsed = tempo;
+		}
 		
-		//step right
-		if (Keyboard::isKeyPressed(Keyboard::D)) 
-		{
-			std::cout << "Move Right" << endl; 
-		}
-		//step left
-		else 
-		{
-			std::cout << "Move Left" << endl;
-		}
 	}
+	else if ((Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::D))&& flag == true )
+	{
+		std::cout << "Miss Timed" << endl;
+		flag = false;
+	}
+	 if(elapsed<(0-grace))
+	{
+		flag = true;
+		elapsed = tempo;
+		std::cout << "Missed" << endl;	
+	}
+	
+	
 }
 
 ActorMovementComponent::ActorMovementComponent(Entity* p)
