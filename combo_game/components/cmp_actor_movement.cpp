@@ -13,7 +13,7 @@ void ActorMovementComponent::update(double dt)
 		//step right
 		if (Keyboard::isKeyPressed(Keyboard::D)) 
 		{
-			std::cout << "Move Right" << endl;
+			std::cout << "Move Right" << endl; 
 		}
 		//step left
 		else 
