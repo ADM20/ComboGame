@@ -6,6 +6,8 @@
 #include <mutex>
 #include <string>
 
+#include "controls.h"
+
 class Scene {
 public:
   Scene() = default;
@@ -37,6 +39,7 @@ public:
   static sf::RenderWindow& GetWindow();
   static sf::Vector2u getWindowSize();
   static void setVsync(bool b);
+  static InputManager *input;
 
 private:
   static Scene* _activeScene;

@@ -8,12 +8,26 @@ using namespace std;
 class InputManager {
 public:
 	static InputManager *getInstance();
-	vector<string> getInputs();
+
+	static vector<vector<bool>> GetAllInputs();
+	static vector<bool> GetInput(const int input);
+
+	enum Input
+	{
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT,
+		LIGHT,
+		MEDIUM,
+		HEAVY,
+		KICK
+	};
 	void Test();
 
 	~InputManager() 
 	{
-		std::cout << "INPUT MANAGER INTITIALISED" << std::endl;
+		std::cout << "DESTRUCTOR CALLED" << std::endl;
 		instanceFlag = false; 
 	};
 
@@ -25,7 +39,14 @@ private:
 	static bool instanceFlag;
 	static InputManager *single;
 
+	static void init();
 	
 	
-	map<int, string> actions;
+	
+	static vector<vector<bool>> triggers;
+	//[a][b]
+	//where a is the line for a particular action
+	//and b is the index for bools
+	//0 is whether its active, 1, is whetehr it was pressed down this frame, 2 is whether it is supposed to be next to be pressed or not
+
 };

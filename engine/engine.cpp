@@ -7,7 +7,6 @@
 #include <future>
 #include <iostream>
 #include <stdexcept>
-#include "controls.h"
 
 using namespace sf;
 using namespace std;
@@ -18,7 +17,8 @@ static bool loading = false;
 static float loadingspinner = 0.f;
 static float loadingTime;
 static RenderWindow* _window;
-InputManager *input = InputManager::getInstance();
+static InputManager *input = InputManager::getInstance();
+
 
 void Loading_update(float dt, const Scene* const scn) {
   //  cout << "Eng: Loading Screen\n";
@@ -86,9 +86,6 @@ void Engine::Start(unsigned int width, unsigned int height,
   RenderWindow window(VideoMode(width, height), gameName);
   _gameName = gameName;
   _window = &window;
-  //initialise InputController
-  input = InputManager::getInstance();
-  input->Test();
 
   Renderer::initialise(window);
   Physics::initialise();
@@ -105,6 +102,7 @@ void Engine::Start(unsigned int width, unsigned int height,
     }
 
     window.clear();
+	InputManager::GetInput(InputManager::DOWN);
     Update();
     Render(window);
     window.display();
