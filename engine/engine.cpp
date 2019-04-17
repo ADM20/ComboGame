@@ -17,7 +17,6 @@ static bool loading = false;
 static float loadingspinner = 0.f;
 static float loadingTime;
 static RenderWindow* _window;
-static InputManager *input = InputManager::getInstance();
 
 
 void Loading_update(float dt, const Scene* const scn) {

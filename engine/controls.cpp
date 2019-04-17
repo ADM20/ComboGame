@@ -5,22 +5,7 @@ using namespace sf;
 
 int numberOfActions = 9;
 
-bool InputManager::instanceFlag = false;
-InputManager* InputManager::single = NULL;
-InputManager* InputManager::getInstance()
-{
-	if (!instanceFlag)
-	{
-		single = new InputManager();
-		instanceFlag = true;
-		InputManager::init();
-		return single;
-	}
-	else
-	{
-		return single;
-	}
-}
+
 
 void InputManager::Init()
 {

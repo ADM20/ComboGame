@@ -7,10 +7,10 @@ using namespace std;
 
 class InputManager {
 public:
-	static InputManager *getInstance();
 
 	static vector<vector<bool>> GetAllInputs();
 	static vector<bool> GetInput(const int input);
+	static void Init();
 
 	enum Input
 	{
@@ -23,26 +23,10 @@ public:
 		HEAVY,
 		KICK
 	};
-	void Test();
+	static void Test();
 
-	~InputManager() 
-	{
-		std::cout << "DESTRUCTOR CALLED" << std::endl;
-		instanceFlag = false; 
-	};
 
 private:
-	InputManager() 
-	{
-		std::cout << "CONSTRUCTOR CALLED" << std::endl;
-	};
-	static bool instanceFlag;
-	static InputManager *single;
-
-	static void init();
-	
-	
-	
 	static vector<vector<bool>> triggers;
 	//[a][b]
 	//where a is the line for a particular action
