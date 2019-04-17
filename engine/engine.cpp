@@ -86,6 +86,9 @@ void Engine::Start(unsigned int width, unsigned int height,
   _gameName = gameName;
   _window = &window;
 
+  //initialise input vectors
+  InputManager::Init();
+
   Renderer::initialise(window);
   Physics::initialise();
   ChangeScene(scn);
@@ -99,9 +102,9 @@ void Engine::Start(unsigned int width, unsigned int height,
     if (Keyboard::isKeyPressed(Keyboard::Escape)) {
       window.close();
     }
-
+	
     window.clear();
-	InputManager::GetInput(InputManager::DOWN);
+	InputManager::Update();
     Update();
     Render(window);
     window.display();
