@@ -76,7 +76,8 @@ void InputManager::Update()
 		}
 	}
 
-	InputManager::print();
+	//debug print
+	//InputManager::print();
 }
 
 void InputManager::print()
