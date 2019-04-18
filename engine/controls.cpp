@@ -27,9 +27,14 @@ vector<vector<bool>> InputManager::GetAllInputs()
 	return InputManager::triggers;
 }
 
-vector<bool> InputManager::GetInput(const InputManager::Input index)
+vector<bool> InputManager::GetInputSet(const InputManager::Input index)
 {
 	return InputManager::triggers[index];
+}
+
+bool InputManager::GetInput(const InputManager::Input index, const InputManager::Mode mode)
+{
+	return InputManager::triggers[index][mode];
 }
 
 

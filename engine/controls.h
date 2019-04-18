@@ -11,6 +11,13 @@ using namespace std;
 
 class InputManager {
 public:
+	enum Mode
+	{
+		IsPressed,
+		DownThisFrame,
+		NextMove
+	};
+
 	enum Input
 	{
 		UP,
@@ -25,7 +32,10 @@ public:
 	};
 
 	static vector<vector<bool>> GetAllInputs();
-	static vector<bool> GetInput(const InputManager::Input input);
+	//get one bool corresponding to a specific mode for an input
+	static bool GetInput(const InputManager::Input input, const InputManager::Mode mode);
+	//get the whole set of bools as a vector for one input type
+	static vector<bool> GetInputSet(const InputManager::Input input);
 	static void Init();
 	static void Rebind(const InputManager::Input, const sf::Keyboard::Key);
 	static void Update();
