@@ -27,8 +27,6 @@ void Level1Scene::Load() {
     s->setShape<sf::RectangleShape>(playerSize);
     s->getShape().setFillColor(Color::Magenta);
     s->getShape().setOrigin(playerSize.x/2,playerSize.y/2);
-
-    //player->addComponent<PlayerPhysicsComponent>(playerSize);
 	//add movement
 	player->addComponent<ActorMovementComponent>();
   }

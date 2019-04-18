@@ -7,47 +7,57 @@ using namespace std;
 
 static double elapsed = 0;
 double tempo = .5;
-double grace = 0.5;
+double grace = .15;
 bool flag = true;
 
 void ActorMovementComponent::update(double dt) 
 {
 	
 	elapsed -= dt;
-
-	if (((0-grace)<elapsed <=(0+grace))&&flag == true)
+	RenderWindow &window = Engine::GetWindow();
+	if (((Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::D))) && flag == true && elapsed >= (0.0 + grace)) // if we are not in grace period
 	{
-		std::cout << "NOW!" << endl;
-		if (Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::D))
+		std::cout << "You MISSED!!" << endl;
+		flag = false; // key pressed
+	}
+
+	//if we are in grace period
+	if (elapsed <= (0.0 + grace))
+	{
+		//circle spwans when you can input 
+		///TEST CODE PLEASE REMOVE///
+		sf::CircleShape shape(50);
+		shape.setFillColor(sf::Color(100, 250, 50));
+		shape.setPosition(50.,50.);
+		window.draw(shape);
+		///REMOVE ABOVE ////
+
+		//if we ran out of time
+		if (elapsed < (0.0 - grace))
 		{
-			//step right
-			if (Keyboard::isKeyPressed(Keyboard::D))
+			if (flag == true) //if we did not hit a correct key we missed the input
 			{
-				std::cout << "Move Right" << endl;
+				std::cout << "Missed" << endl;
 			}
-			//step left
-			else
-			{
-				std::cout << "Move Left" << endl;
-			}
-			flag = false;
+			flag = true;
 			elapsed = tempo;
 		}
-		
+		//take input
+		if ((Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::D)) && flag == true)
+				{
+					//step right
+					if (Keyboard::isKeyPressed(Keyboard::D))
+					{
+						std::cout << "Move Right" << endl;
+					}
+					//step left
+					else
+					{
+						std::cout << "Move Left" << endl;
+					}
+					flag = false; // key pressed
+				}
 	}
-	else if ((Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::D))&& flag == true )
-	{
-		std::cout << "Miss Timed" << endl;
-		flag = false;
-	}
-	 if(elapsed<(0-grace))
-	{
-		flag = true;
-		elapsed = tempo;
-		std::cout << "Missed" << endl;	
-	}
-	
-	
 }
 
 ActorMovementComponent::ActorMovementComponent(Entity* p)
