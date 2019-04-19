@@ -49,11 +49,13 @@ void ActorMovementComponent::update(double dt)
 					if (Keyboard::isKeyPressed(Keyboard::D))
 					{
 						std::cout << "Move Right" << endl;
+						move(100,0);
 					}
 					//step left
 					else
 					{
 						std::cout << "Move Left" << endl;
+						move(-100, 0);
 					}
 					flag = false; // key pressed
 				}
@@ -64,7 +66,7 @@ ActorMovementComponent::ActorMovementComponent(Entity* p)
     : _speed(100.0f), Component(p) {}
 
 bool ActorMovementComponent::validMove(const sf::Vector2f& pos) {
-  return (LevelSystem::getTileAt(pos) != LevelSystem::WALL);
+   return (LevelSystem::getTileAt(pos) != LevelSystem::WALL);
   // return true;
 }
 
