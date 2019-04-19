@@ -89,14 +89,19 @@ void Engine::Start(unsigned int width, unsigned int height,
   //initialise input vectors
   InputManager::Init();
 
+  //Load last save
+  SaveSystem::read();
+
   Renderer::initialise(window);
   Physics::initialise();
   ChangeScene(scn);
   while (window.isOpen()) {
     Event event;
     while (window.pollEvent(event)) {
-      if (event.type == Event::Closed) {
-        window.close();
+      if (event.type == Event::Closed) 
+	  {
+		  SaveSystem::write();
+		  window.close();
       }
     }
     if (Keyboard::isKeyPressed(Keyboard::Escape)) {
@@ -113,6 +118,7 @@ void Engine::Start(unsigned int width, unsigned int height,
     _activeScene->UnLoad();
     _activeScene = nullptr;
   }
+  
   window.close();
   Physics::shutdown();
   // Render::shutdown();

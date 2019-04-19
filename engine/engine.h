@@ -7,6 +7,7 @@
 #include <string>
 
 #include "controls.h"
+#include "save.h"
 
 class Scene {
 public:
