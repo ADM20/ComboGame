@@ -44,15 +44,15 @@ void InputManager::Test()
 }
 
 
-void InputManager::Rebind(const InputManager::Input action, const sf::Keyboard::Key key)
+void InputManager::RebindKey(const InputManager::Input action, const sf::Keyboard::Key key)
 {
-	InputManager::bindings[action] = key;
+	InputManager::keyBindings[action] = key;
 }
 
 
 void InputManager::Update()
 {
-	for each(pair<InputManager::Input, Keyboard::Key> p in bindings)
+	for each(pair<InputManager::Input, Keyboard::Key> p in keyBindings)
 	{
 		//set triggers true of false for key pressed
 		if (Keyboard::isKeyPressed(p.second))
@@ -64,9 +64,45 @@ void InputManager::Update()
 
 			//if it was not pressed last frame set flag for key down this frame to true, else to false
 			if (!pressedLastFrame)
+			{
 				InputManager::triggers[p.first][1] = true;
+				cout << p.first << ":" << InputManager::triggers[p.first][1]<< endl;
+			}
 			else
+			{
 				InputManager::triggers[p.first][1] = false;
+				cout << p.first << ":" << InputManager::triggers[p.first][1] << endl;
+			}
+		}
+		else
+		{
+			//set trigger to false and key down this frame to false
+			InputManager::triggers[p.first][0] = false;
+			InputManager::triggers[p.first][1] = false;
+		}
+	}
+
+	for each(pair<InputManager::Input, InputManager::JoystickButton> p in gamepadBindings)
+	{
+		//set triggers true of false for key pressed
+		if (Joystick::isButtonPressed(0, p.second))
+		{
+			//check if it was already pressed
+			bool pressedLastFrame = InputManager::triggers[p.first][1];
+			//set it
+			InputManager::triggers[p.first][0] = true;
+
+			//if it was not pressed last frame set flag for key down this frame to true, else to false
+			if (!pressedLastFrame)
+			{
+				InputManager::triggers[p.first][1] = true;
+				cout << p.first << ":" << InputManager::triggers[p.first][1] << endl;
+			}
+			else
+			{
+				InputManager::triggers[p.first][1] = false;
+				cout << p.first << ":" << InputManager::triggers[p.first][1] << endl;
+			}
 		}
 		else
 		{
@@ -94,17 +130,33 @@ void InputManager::print()
 }
 
 //default bindings
-map<InputManager::Input, Keyboard::Key> InputManager::bindings =
+map<InputManager::Input, Keyboard::Key> InputManager::keyBindings =
 {
-	{InputManager::UP, Keyboard::W },
-	{InputManager::DOWN, Keyboard::S },
-	{InputManager::LEFT, Keyboard::A },
-	{InputManager::RIGHT, Keyboard::D },
-	{InputManager::LIGHT, Keyboard::Numpad7 },
-	{InputManager::MEDIUM, Keyboard::Numpad8 },
-	{InputManager::HEAVY, Keyboard::Numpad9 },
-	{InputManager::KICK, Keyboard::Add},
-	{InputManager::CONFIRM, Keyboard::Enter },
+	{InputManager::Up, Keyboard::W },
+	{InputManager::Down, Keyboard::S },
+	{InputManager::Left, Keyboard::A },
+	{InputManager::Right, Keyboard::D },
+	{InputManager::LightPunch, Keyboard::Numpad4 },
+	{InputManager::MediumPunch, Keyboard::Numpad5 },
+	{InputManager::HeavyPunch, Keyboard::Numpad6 },
+	{InputManager::LightKick, Keyboard::Numpad1},
+	{InputManager::MediumKick, Keyboard::Numpad2},
+	{InputManager::HeavyKick, Keyboard::Numpad3},
+	{InputManager::Confirm, Keyboard::Enter },
 };
 
+map<InputManager::Input, InputManager::JoystickButton> InputManager::gamepadBindings =
+{
+	{InputManager::Up, InputManager::JoystickButton::JoyUp },
+	{InputManager::Down, InputManager::JoystickButton::JoyDown },
+	{InputManager::Left, InputManager::JoystickButton::JoyLeft },
+	{InputManager::Right, InputManager::JoystickButton::JoyRight },
+	{InputManager::LightPunch, InputManager::JoystickButton::X },
+	{InputManager::MediumPunch, InputManager::JoystickButton::Y },
+	{InputManager::HeavyPunch, InputManager::JoystickButton::RB },
+	{InputManager::LightKick, InputManager::JoystickButton::A},
+	{InputManager::MediumKick, InputManager::JoystickButton::B},
+	{InputManager::HeavyKick, InputManager::JoystickButton::LB},
+	{InputManager::Confirm, InputManager::JoystickButton::A },
+};
 
