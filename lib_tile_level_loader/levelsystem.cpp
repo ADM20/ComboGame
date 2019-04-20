@@ -209,7 +209,7 @@ LevelSystem::Tile LevelSystem::getTileAt(Vector2f v) {
   if (a.x < 0 || a.y < 0) {
     throw string("Tile out of range ");
   }
-  return getTile(Vector2ul((v - _offset) / (_tileSize)));
+   return getTile(Vector2ul((v - _offset) / (_tileSize)));
 }
 
 bool LevelSystem::isOnGrid(sf::Vector2f v) {

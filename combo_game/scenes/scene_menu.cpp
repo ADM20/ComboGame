@@ -14,7 +14,7 @@ void MenuScene::Load() {
   cout << "Menu Load \n";
   {
     auto txt = makeEntity();
-    auto t = txt->addComponent<TextComponent>("Platformer \n1 - Load Test Level \n2 - Options");
+    auto t = txt->addComponent<TextComponent>("Main Menu \n\n1 - Load Test Level \n2 - Options");
   }
   setLoaded(true);
 }
@@ -33,7 +33,7 @@ void MenuScene::Update(const double& dt) {
 				switch (event.key.code)
 				{
 				case sf::Keyboard::Num1:
-					Engine::ChangeScene(&level3);
+					Engine::ChangeScene(&level1);
 					flag = false;
 					break;
 
