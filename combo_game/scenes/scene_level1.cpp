@@ -1,3 +1,4 @@
+
 #include "scene_level1.h"
 #include "../components/cmp_player_physics.h"
 #include "../components/cmp_sprite.h"
@@ -58,6 +59,7 @@ void Level1Scene::Load() {
 
   //Simulate long loading times
   //std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+
   std::cout << " Scene 1 Load Done" << endl;
 
   setLoaded(true);
@@ -72,6 +74,7 @@ void Level1Scene::UnLoad() {
 
 void Level1Scene::Update(const double& dt) {
 	Scene::Update(dt);
+
   if (ls::getTileAt(player->getPosition()) == ls::END) {
     Engine::ChangeScene((Scene*)&level2);
   }

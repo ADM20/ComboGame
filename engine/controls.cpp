@@ -66,12 +66,12 @@ void InputManager::Update()
 			if (!pressedLastFrame)
 			{
 				InputManager::triggers[p.first][1] = true;
-				cout << p.first << ":" << InputManager::triggers[p.first][1]<< endl;
+				//cout << p.first << ":" << InputManager::triggers[p.first][1]<< endl;
 			}
 			else
 			{
 				InputManager::triggers[p.first][1] = false;
-				cout << p.first << ":" << InputManager::triggers[p.first][1] << endl;
+				//cout << p.first << ":" << InputManager::triggers[p.first][1] << endl;
 			}
 		}
 		else
@@ -96,12 +96,12 @@ void InputManager::Update()
 			if (!pressedLastFrame)
 			{
 				InputManager::triggers[p.first][1] = true;
-				cout << p.first << ":" << InputManager::triggers[p.first][1] << endl;
+				//cout << p.first << ":" << InputManager::triggers[p.first][1] << endl;
 			}
 			else
 			{
 				InputManager::triggers[p.first][1] = false;
-				cout << p.first << ":" << InputManager::triggers[p.first][1] << endl;
+				//cout << p.first << ":" << InputManager::triggers[p.first][1] << endl;
 			}
 		}
 		else
