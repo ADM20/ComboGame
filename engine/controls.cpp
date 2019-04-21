@@ -43,10 +43,29 @@ void InputManager::Test()
 	std::cout << "Test() called" << std::endl;
 }
 
-
+//Rebind key
 void InputManager::RebindKey(const InputManager::Input action, const sf::Keyboard::Key key)
 {
 	InputManager::keyBindings[action] = key;
+}
+
+//Overload to rebind Joystick controls
+void InputManager::RebindKey(const InputManager::Input action, const InputManager::JoystickButton button)
+{
+	InputManager::gamepadBindings[action] = button;
+}
+
+void PollJoystick()
+{
+	//for each button on the controller
+	for (int i = 0; i < InputManager::JoystickButton::JoyRight + 1; i++)
+	{
+	if (sf::Joystick::)
+	{
+
+	}
+	}
+
 }
 
 
