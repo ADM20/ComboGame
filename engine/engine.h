@@ -8,6 +8,7 @@
 
 #include "controls.h"
 #include "save.h"
+#include "musicLoader.h"
 
 class Scene {
 public:

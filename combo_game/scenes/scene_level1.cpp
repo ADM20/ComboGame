@@ -1,4 +1,3 @@
-
 #include "scene_level1.h"
 #include "../components/cmp_player_physics.h"
 #include "../components/cmp_sprite.h"
@@ -16,11 +15,11 @@ static shared_ptr<Entity> player;
 static shared_ptr<Entity> bar;
 static shared_ptr<Entity> tempo;
 static shared_ptr<Entity> marker;
-static double tempoTime = .5;
+static double tempoTime = .5;//time between beats
 
 void Level1Scene::Load() {
   std::cout << " Scene 1 Load" << endl;
-  ls::loadLevelFile("res/level_1.txt", 40.0f);
+  ls::loadLevelFile("res/level_1.txt", 40.0f); //load level file 1
 
   auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
   ls::setOffset(Vector2f(0, ho));
@@ -47,7 +46,6 @@ void Level1Scene::Load() {
 	  s->getShape().setFillColor(Color::Blue);
 
 	  
-	  
 	  marker = makeEntity();
 	  marker->setPosition(ls::getTilePosition(ls::findTiles(ls::TEMPO)[0]));
 	  auto t = marker->addComponent<ShapeComponent>();
@@ -57,11 +55,15 @@ void Level1Scene::Load() {
 	   
   }
 
+
+
   //Simulate long loading times
   //std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 
   std::cout << " Scene 1 Load Done" << endl;
-
+  //start music for this level
+  MusicLoader::load("music",true);
+  MusicLoader::play();
   setLoaded(true);
 }
 
@@ -84,6 +86,7 @@ void Level1Scene::Update(const double& dt) {
 	//{
 	 //display victory overlay
 	//}
+  // MusicLoader::stop();
   //Engine::ChangeScene((Scene*)&level2);
   //}
   static double barTime = 0.0f;

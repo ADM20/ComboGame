@@ -8,14 +8,14 @@ using namespace std;
 
 void BarMovementComponent::update(double dt)
 {
-		move(-0.5, 0);	
+		move(-0.5, 0.);	
 }
 
 BarMovementComponent::BarMovementComponent(Entity* p)
     : _speed(100.0f), Component(p) {}
 
 bool BarMovementComponent::validMove(const sf::Vector2f& pos) {
-   return (LevelSystem::getTileAt(pos) != LevelSystem::TEMPO);
+   return (LevelSystem::getTileAt(pos) != LevelSystem::TEMPO);// until it reaches the tempo bar
   // return true;
 }
 
