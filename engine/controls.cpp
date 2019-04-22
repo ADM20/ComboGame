@@ -55,16 +55,20 @@ void InputManager::RebindKey(const InputManager::Input action, const InputManage
 	InputManager::gamepadBindings[action] = button;
 }
 
-void PollJoystick()
+int InputManager::PollJoystick()
 {
 	//for each button on the controller
 	for (int i = 0; i < InputManager::JoystickButton::JoyRight + 1; i++)
 	{
-	if (sf::Joystick::)
-	{
+		//if a button is pressed return it's index
+		if (sf::Joystick::isButtonPressed(0, i))
+		{
+			return i;
+		}
+	}
 
-	}
-	}
+	//if no buttons pressed reutrn -1
+	return -1;
 
 }
 

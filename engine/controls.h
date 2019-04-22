@@ -60,7 +60,7 @@ public:
 	static void RebindKey(const InputManager::Input, const sf::Keyboard::Key);
 	static void RebindKey(const InputManager::Input action, const InputManager::JoystickButton button);
 	static void Update();
-
+	static int PollJoystick();
 	
 	static void Test();
 
