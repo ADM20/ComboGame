@@ -92,15 +92,15 @@ void Level1Scene::Update(const double& dt) {
   static double barTime = 0.0f;
   barTime -= dt;
 
-  if (barTime <= 0.f)
+  if (barTime <= 0.f)//spawn a new bar every x seconds
   {
-	  barTime = tempoTime;
+	  barTime = tempoTime;//where x = tempo time
 	  bar = makeEntity();
 	  bar->setPosition(ls::getTilePosition(ls::findTiles(ls::BAR)[0]));
 	  auto b = bar->addComponent<ShapeComponent>();
 	  b->setShape<sf::RectangleShape>(Vector2f(10, 40));
 	  b->getShape().setFillColor(Color::Magenta);
-	  bar->addComponent<BarMovementComponent>();
+	  bar->addComponent<BarMovementComponent>();//moves along until it reaches the end of the bar, then delete it
   }
   
 }

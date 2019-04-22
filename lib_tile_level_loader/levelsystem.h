@@ -17,14 +17,15 @@ public:
   typedef unsigned char Tile;
 
   enum TILES {
-    EMPTY = ' ',
-    START = 's',
-    END = 'e',
-    WALL = 'w',
-    ENEMY = 'n',
-    WAYPOINT = '+',
-	TEMPO = 'T',
-	BAR = 't'
+	  EMPTY = ' ',
+	  START = 's',
+	  END = 'e',
+	  WALL = 'w',
+	  ENEMY = 'n',
+	  WAYPOINT = '+',
+	  TEMPO = 'T',
+	  BAR = 't',
+	  INPUT = 'n'
   };
 
   static Tile getTile(sf::Vector2ul);

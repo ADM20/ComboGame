@@ -9,15 +9,20 @@ using namespace std;
 void BarMovementComponent::update(double dt)
 {
 		move(-0.5, 0.);	
+		if (LevelSystem::getTileAt(_parent->getPosition()) == LevelSystem::INPUT)//when the bar reaches the input section, take input
+		{
+			//take input now
+		}
 }
 
 BarMovementComponent::BarMovementComponent(Entity* p)
     : _speed(100.0f), Component(p) {}
 
-bool BarMovementComponent::validMove(const sf::Vector2f& pos) {
-   return (LevelSystem::getTileAt(pos) != LevelSystem::TEMPO);// until it reaches the tempo bar
+bool BarMovementComponent::validMove(const sf::Vector2f& pos) {//when it reaches the tempo bar, delete it
+   return (LevelSystem::getTileAt(pos) != LevelSystem::TEMPO);
   // return true;
 }
+
 
 void BarMovementComponent::move(const sf::Vector2f& p) {
   auto pp = _parent->getPosition() + p;
@@ -26,6 +31,7 @@ void BarMovementComponent::move(const sf::Vector2f& p) {
   }
   else
   {
+	  //play a sound for when deleted
 	  _parent->setForDelete();
   }
 }
