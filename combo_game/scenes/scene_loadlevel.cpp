@@ -12,7 +12,7 @@ void LoadScene::Load() {
   cout << "Options Load \n";
   {
     auto txt = makeEntity();
-    auto t = txt->addComponent<TextComponent>("Level Selection\n");
+    auto t = txt->addComponent<TextComponent>("Level Selection\n1 - Level 1\n2 - Level 2\n3 - Level 3\nR - Return");
   }
   setLoaded(true);
 }
@@ -32,17 +32,23 @@ void LoadScene::Update(const double& dt) {
 				switch (event.key.code)
 				{
 				case sf::Keyboard::Num1:
-					//call keybind scene
+					//if(scene 1 is unlocked){
+					Engine::ChangeScene(&level1);
 					flag = false;
 					break;
 				case sf::Keyboard::Num2:
-					//call resolution selection scene
+					Engine::ChangeScene(&level2);
 					flag = false;
 					break;
 				case sf::Keyboard::Num3:
 					Engine::ChangeScene(&menu);
 					flag = false;
 					break;
+				case sf::Keyboard::R:
+					Engine::ChangeScene(&menu);
+					flag = false;
+					break;
+					
 				}
 			}
 		}

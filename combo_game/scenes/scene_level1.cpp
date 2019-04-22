@@ -55,10 +55,8 @@ void Level1Scene::Load() {
 	   
   }
 
-
-
-  //Simulate long loading times
-  //std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+  //Hide Loading
+  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
   std::cout << " Scene 1 Load Done" << endl;
   //start music for this level
@@ -76,6 +74,13 @@ void Level1Scene::UnLoad() {
 
 void Level1Scene::Update(const double& dt) {
 	Scene::Update(dt);
+	if((Keyboard::isKeyPressed(Keyboard::R))){ 
+		Engine::ChangeScene((Scene*)&level1);
+		return; 
+	}
+	if ((Keyboard::isKeyPressed(Keyboard::Q))) {
+		exit(0);
+	}
 
   if (ls::getTileAt(player->getPosition()) == ls::END) {
     Engine::ChangeScene((Scene*)&level2);

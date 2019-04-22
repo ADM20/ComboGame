@@ -12,7 +12,7 @@ void OptionsScene::Load() {
   cout << "Options Load \n";
   {
     auto txt = makeEntity();
-    auto t = txt->addComponent<TextComponent>("Options Menu \n\n 1 - Keybinds \n 2 - Resolution \n  \n 3 - Menu");
+    auto t = txt->addComponent<TextComponent>("Options Menu \n\n 1 - Keybinds \n 2 - Resolution \n  \n R - Return");
   }
   setLoaded(true);
 }
@@ -39,7 +39,7 @@ void OptionsScene::Update(const double& dt) {
 					//call resolution selection scene
 					flag = false;
 					break;
-				case sf::Keyboard::Num3:
+				case sf::Keyboard::R:
 					Engine::ChangeScene(&menu);
 					flag = false;
 					break;
