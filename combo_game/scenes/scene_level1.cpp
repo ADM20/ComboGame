@@ -30,7 +30,12 @@ void Level1Scene::Load() {
 
     player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
 
-	auto h = player->addComponent<HitPointsComponent>(100);
+	auto hp = player->addComponent<HitPointsComponent>(100);
+	auto hpBar = player->addComponent<ShapeComponent>();
+	hpBar->setShape<sf::RectangleShape>(Vector2f(40.f, 10.f));
+	hpBar->getShape().setOrigin(player->getPosition().x, player->getPosition().y + 15);
+	hpBar->getShape().setFillColor(Color::Magenta);
+
 
 	//vector<shared_ptr<HitPointsComponent>> x = player->GetCompatibleComponent<HitPointsComponent>();
 	//int f = x[0]->getHP();
