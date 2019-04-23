@@ -11,6 +11,7 @@ AttackComponent::AttackComponent(Entity* p) : Component(p)
 
 void AttackComponent::Attack(Entity* oponent, int damage)
 {
-	oponent->addComponent<HitPointsComponent>()->changeHP(-damage);
-	cout << damage << " damge done to " << oponent << endl;
+	vector<shared_ptr<HitPointsComponent>> x = oponent->GetCompatibleComponent<HitPointsComponent>();
+	x[0]->changeHP(-damage);
+	cout << damage << " damge done" << endl;
 }

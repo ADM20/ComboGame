@@ -1,6 +1,7 @@
 #include "scene_level1.h"
 #include "../components/cmp_player_physics.h"
 #include "../components/cmp_sprite.h"
+#include "../components/cmp_hp.h"
 #include "../game.h"
 #include <LevelSystem.h>
 #include <iostream>
@@ -28,6 +29,14 @@ void Level1Scene::Load() {
     s->getShape().setOrigin(10.f, 15.f);
 
     player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
+
+	auto h = player->addComponent<HitPointsComponent>(100);
+
+	//vector<shared_ptr<HitPointsComponent>> x = player->GetCompatibleComponent<HitPointsComponent>();
+	//int f = x[0]->getHP();
+	//cout << f << endl;
+	
+
   }
 
   // Add physics colliders to level tiles.

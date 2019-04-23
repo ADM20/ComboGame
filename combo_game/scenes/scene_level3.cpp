@@ -1,6 +1,7 @@
 #include "scene_level3.h"
 #include "../components/cmp_physics.h"
 #include "../components/cmp_player_physics.h"
+#include "../components/cmp_hp.h"
 #include "../game.h"
 #include "../components/cmp_bullet.h"
 #include <LevelSystem.h>
@@ -27,6 +28,9 @@ void Level3Scene::Load() {
 
 	  player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
 
+	  player->addComponent<HitPointsComponent>(100);
+	  cout<< player->addComponent<HitPointsComponent>(100)->getHP();
+
     // pl->setPosition({100, 100});
   }
 
@@ -42,6 +46,7 @@ void Level3Scene::Load() {
 	  }
   }
 
+  cout << player->addComponent<HitPointsComponent>()->getHP();
   cout << " Scene 3 Load Done" << endl;
   setLoaded(true);
 }
