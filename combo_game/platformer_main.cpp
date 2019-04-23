@@ -8,8 +8,10 @@ MenuScene menu;
 Level1Scene level1;
 Level2Scene level2;
 OptionsScene optionsMenu;
+IntroScene intro;
 
 
 int main() {
-  Engine::Start(1280, 720, "Combo Trainer",&menu);
+  Engine::Start(1280, 720, "Combo Trainer",&intro);
+  
 }

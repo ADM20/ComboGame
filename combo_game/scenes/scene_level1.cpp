@@ -7,6 +7,7 @@
 #include <LevelSystem.h>
 #include <iostream>
 #include <thread>
+#include <system_resources.h>
 
 using namespace std;
 using namespace sf;
@@ -16,19 +17,31 @@ static shared_ptr<Entity> bar;
 static shared_ptr<Entity> tempo;
 static shared_ptr<Entity> marker;
 static double tempoTime = .5;//time between beats
-
+Texture spritesheet;
 void Level1Scene::Load() {
-  std::cout << " Scene 1 Load" << endl;
+  std::cout << " Scene 1 Load" << endl;//debug
+
   ls::loadLevelFile("res/level_1.txt", 40.0f); //load level file 1
 
+  //window
   auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
   ls::setOffset(Vector2f(0, ho));
+
+
+  
+
   Vector2f playerSize(150.f,300.f);
   // Create player
   {
+	  if (!spritesheet.loadFromFile("res/img/invaders/invaders_sheet.png")) {
+	  cerr << "Failed to load spritesheet!" << std::endl;
+  }
+	  auto rect = IntRect(32, 0, 32, 32);
     player = makeEntity();
     player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
+	//add sprites
     auto s = player->addComponent<ShapeComponent>();
+	//pSprite->setTexure(Resources::get<Texture>("res/img/char_3.png"));
     s->setShape<sf::RectangleShape>(playerSize);
     s->getShape().setFillColor(Color::Magenta);
     s->getShape().setOrigin(playerSize.x/2,playerSize.y/2);
