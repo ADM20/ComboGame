@@ -37,5 +37,4 @@ public:
   template <typename T, typename... Targs> void setShape(Targs... params) {
     _shape.reset(new T(params...));
   }
-
 };
