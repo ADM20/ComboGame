@@ -16,7 +16,7 @@ static shared_ptr<Entity> player;
 static shared_ptr<Entity> bar;
 static shared_ptr<Entity> tempo;
 static shared_ptr<Entity> marker;
-static double tempoTime = .5;//time between beats
+static double tempoTime = 1.;//time between beats
 Texture spritesheet;
 void Level1Scene::Load() {
   std::cout << " Scene 1 Load" << endl;//debug

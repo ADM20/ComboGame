@@ -1,10 +1,11 @@
 #include "controls.h"
 using namespace std;
 using namespace sf;
-
+sf::Clock clockTime;//start a timer
 
 vector<vector<bool>> InputManager::triggers = {};
-
+bool _takeInput = false;
+float _grace = 1.0f;
 
 void InputManager::Init()
 {
@@ -111,6 +112,11 @@ void InputManager::Update()
 			InputManager::triggers[p.first][1] = false;
 		}
 	}
+	if ((_grace - clockTime.getElapsedTime().asSeconds()) <= 0.0f)//if we are not in grace period anymore
+	{
+		_takeInput = false;//stop taking inputs
+	}
+
 
 	//debug print
 	//InputManager::print();
@@ -127,6 +133,18 @@ void InputManager::print()
 		}
 		cout << endl;
 	}
+}
+
+bool InputManager::getBool()//return true if inputs are open, false if you should not take user input
+{
+	return _takeInput;
+}
+
+void InputManager::setBool(float grace)//take in a grace period, set bool to true for that amount of time
+{
+	_grace = grace;
+	_takeInput = true;
+	clockTime.restart();//start the clock!
 }
 
 //default bindings

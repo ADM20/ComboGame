@@ -6,13 +6,12 @@ using namespace sf;
 using namespace std;
 
 static double elapsed = 0;
-double tempo = .5;
+double tempo = .45;
 double grace = .15;
 bool flag = true;
 
 void ActorMovementComponent::update(double dt) 
 {
-	
 	elapsed -= dt;
 	RenderWindow &window = Engine::GetWindow();
 	if (((Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::D))) && flag == true && elapsed >= (0.0 + grace)) // if we are not in grace period
@@ -27,13 +26,8 @@ void ActorMovementComponent::update(double dt)
 	if (elapsed <= (0.0 + grace))
 	{
 		//circle spwans when you can input 
-		///TEST CODE PLEASE REMOVE///
-		sf::CircleShape shape(50);
-		shape.setFillColor(sf::Color(100, 250, 50));
-		shape.setPosition(50.,50.);
-		window.draw(shape);
-		///REMOVE ABOVE ////
-
+	
+	
 		//if we ran out of time
 		if (elapsed < (0.0 - grace))
 		{
