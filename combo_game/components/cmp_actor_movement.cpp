@@ -17,6 +17,7 @@ void ActorMovementComponent::update(double dt)
 	RenderWindow &window = Engine::GetWindow();
 	if (((Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::D))) && flag == true && elapsed >= (0.0 + grace)) // if we are not in grace period
 	{
+		//InputManager::GetInput(InputManager::Input::Down, InputManager::Mode::IsPressed)
 		//play a sound
 		std::cout << "You MISSED!!" << endl;
 		flag = false; // key pressed

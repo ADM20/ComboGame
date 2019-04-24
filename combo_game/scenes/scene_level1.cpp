@@ -88,7 +88,8 @@ void Level1Scene::UnLoad() {
 void Level1Scene::Update(const double& dt) {
 	Scene::Update(dt);
 	if((Keyboard::isKeyPressed(Keyboard::R))){ 
-		Engine::ChangeScene((Scene*)&level1);
+		//UnLoad();
+		Engine::ChangeScene((Scene*)&menu);
 		return; 
 	}
 	if ((Keyboard::isKeyPressed(Keyboard::Q))) {
