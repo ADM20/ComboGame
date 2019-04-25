@@ -1,10 +1,11 @@
 #include "controls.h"
 using namespace std;
 using namespace sf;
-
+sf::Clock clockTime;//start a timer
 
 vector<vector<bool>> InputManager::triggers = {};
-
+bool _takeInput = false;
+float _grace = 0.2f;
 
 void InputManager::Init()
 {
@@ -89,12 +90,12 @@ void InputManager::Update()
 			if (!pressedLastFrame)
 			{
 				InputManager::triggers[p.first][1] = true;
-				cout << p.first << ":" << InputManager::triggers[p.first][1]<< endl;
+				//cout << p.first << ":" << InputManager::triggers[p.first][1]<< endl;
 			}
 			else
 			{
 				InputManager::triggers[p.first][1] = false;
-				cout << p.first << ":" << InputManager::triggers[p.first][1] << endl;
+				//cout << p.first << ":" << InputManager::triggers[p.first][1] << endl;
 			}
 		}
 		else
@@ -105,36 +106,47 @@ void InputManager::Update()
 		}
 	}
 
-	for each(pair<InputManager::Input, InputManager::JoystickButton> p in gamepadBindings)
+	//cout << "left "<< ": " << InputManager::GetInput(InputManager::Input::Left, InputManager::Mode::IsPressed)<<endl;
+
+	if (Joystick::isConnected(0))
 	{
-		//set triggers true of false for key pressed
-		if (Joystick::isButtonPressed(0, p.second))
+		for each(pair<InputManager::Input, InputManager::JoystickButton> p in gamepadBindings)
 		{
-			//check if it was already pressed
-			bool pressedLastFrame = InputManager::triggers[p.first][1];
-			//set it
-			InputManager::triggers[p.first][0] = true;
-
-			//if it was not pressed last frame set flag for key down this frame to true, else to false
-			if (!pressedLastFrame)
+			//set triggers true of false for key pressed
+			if (Joystick::isButtonPressed(0, p.second))
 			{
-				InputManager::triggers[p.first][1] = true;
-				cout << p.first << ":" << InputManager::triggers[p.first][1] << endl;
+				//check if it was already pressed
+				bool pressedLastFrame = InputManager::triggers[p.first][1];
+				//set it
+				InputManager::triggers[p.first][0] = true;
+
+				//if it was not pressed last frame set flag for key down this frame to true, else to false
+				if (!pressedLastFrame)
+				{
+					InputManager::triggers[p.first][1] = true;
+					//cout << p.first << ":" << InputManager::triggers[p.first][1] << endl;
+				}
+				else
+				{
+					InputManager::triggers[p.first][1] = false;
+					//cout << p.first << ":" << InputManager::triggers[p.first][1] << endl;
+				}
 			}
 			else
 			{
+				//set trigger to false and key down this frame to false
+				InputManager::triggers[p.first][0] = false;
 				InputManager::triggers[p.first][1] = false;
-				cout << p.first << ":" << InputManager::triggers[p.first][1] << endl;
 			}
 		}
-		else
-		{
-			//set trigger to false and key down this frame to false
-			InputManager::triggers[p.first][0] = false;
-			InputManager::triggers[p.first][1] = false;
-		}
+		
+		//cout << "left " << ": " << InputManager::GetInput(InputManager::Input::Left, InputManager::Mode::IsPressed)<<endl;
 	}
-
+	if ((_grace - clockTime.getElapsedTime().asSeconds()) <= 0.0f)//if we are not in grace period anymore
+	{
+		_takeInput = false;//stop taking inputs
+	}
+	
 	//debug print
 	//InputManager::print();
 }
@@ -150,6 +162,18 @@ void InputManager::print()
 		}
 		cout << endl;
 	}
+}
+
+bool InputManager::getBool()//return true if inputs are open, false if you should not take user input
+{
+	return _takeInput;
+}
+
+void InputManager::setBool(float grace)//take in a grace period, set bool to true for that amount of time
+{
+	_grace = grace;
+	_takeInput = true;
+	clockTime.restart();//start the clock!
 }
 
 //default bindings

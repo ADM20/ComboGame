@@ -31,14 +31,14 @@ void Loading_update(float dt, const Scene* const scn) {
 }
 void Loading_render() {
   // cout << "Eng: Loading Screen Render\n";
-  static CircleShape octagon(80, 8);
+  static CircleShape octagon(80, 3);
   octagon.setOrigin(80, 80);
   octagon.setRotation(loadingspinner);
   octagon.setPosition(Vcast<float>(Engine::getWindowSize()) * .5f);
   octagon.setFillColor(Color(255,255,255,min(255.f,40.f*loadingTime)));
-  static Text t("Loading", *Resources::get<sf::Font>("RobotoMono-Regular.ttf"));
-  t.setFillColor(Color(255,255,255,min(255.f,40.f*loadingTime)));
-  t.setPosition(Vcast<float>(Engine::getWindowSize()) * Vector2f(0.4f,0.3f));
+  static Text t("HERE WE GO!", *Resources::get<sf::Font>("RobotoMono-Regular.ttf"));
+  t.setFillColor(Color(100,255,255,min(255.f,40.f*loadingTime)));
+  t.setPosition(Vcast<float>(Engine::getWindowSize()) * Vector2f(0.42f,0.3f));
   Renderer::queue(&t);
   Renderer::queue(&octagon);
 }
@@ -82,7 +82,8 @@ void Engine::Render(RenderWindow& window) {
 
 void Engine::Start(unsigned int width, unsigned int height,
                    const std::string& gameName, Scene* scn) {
-  RenderWindow window(VideoMode(width, height), gameName);
+  RenderWindow window(VideoMode(width, height), gameName,Style::None);
+
   _gameName = gameName;
   _window = &window;
 

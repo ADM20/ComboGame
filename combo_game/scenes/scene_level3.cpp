@@ -1,97 +1,137 @@
 #include "scene_level3.h"
-#include "../components/cmp_physics.h"
 #include "../components/cmp_player_physics.h"
-#include "../components/cmp_hp.h"
+#include "../components/cmp_sprite.h"
+#include "../components/cmp_actor_movement.h"
+#include "../components/cmp_bar_movement.h"
+#include "../components/cmp_obar_movement.h"
 #include "../game.h"
-#include "../components/cmp_bullet.h"
 #include <LevelSystem.h>
 #include <iostream>
+#include <thread>
+#include <system_resources.h>
+
 using namespace std;
 using namespace sf;
 
 static shared_ptr<Entity> player;
+static shared_ptr<Entity> bar;
+static shared_ptr<Entity> tempo;
+static shared_ptr<Entity> marker;
+
+static double tempoTime = .48;//time between beats
 
 void Level3Scene::Load() {
-  cout << "Scene 3 Load" << endl;
-  ls::loadLevelFile("res/level_3.txt", 40.0f);
-  auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
-  ls::setOffset(Vector2f(0, ho));
+	std::cout << " Scene 3 Load" << endl;//debug
 
-  // Create player
-  {
-	  player = makeEntity();
-	  player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
-	  auto s = player->addComponent<ShapeComponent>();
-	  s->setShape<sf::RectangleShape>(Vector2f(20.f, 30.f));
-	  s->getShape().setFillColor(Color::Magenta);
-	  s->getShape().setOrigin(10.f, 15.f);
+	ls::loadLevelFile("res/level_3.txt", 40.0f); //load level file 1
 
-	  player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
+	//window
+	auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
+	ls::setOffset(Vector2f(0, ho));
 
-	  player->addComponent<HitPointsComponent>(100);
-	  cout<< player->addComponent<HitPointsComponent>(100)->getHP();
+	Vector2f playerSize(150.f, 300.f);
+	// Create player
+	{
 
-    // pl->setPosition({100, 100});
-  }
+		auto rect = IntRect(32, 0, 32, 32);
+		player = makeEntity();
+		player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
+		//add sprites
+		auto s = player->addComponent<ShapeComponent>();
+		//pSprite->setTexure(Resources::get<Texture>("res/img/char_3.png"));
+		s->setShape<sf::RectangleShape>(playerSize);
+		s->getShape().setFillColor(Color::Magenta);
+		s->getShape().setOrigin(playerSize.x / 2, playerSize.y / 2);
+		//add movement
+		player->addComponent<ActorMovementComponent>();
+	}
 
-  // Add physics colliders to level tiles.
-  {
-	  auto walls = ls::findTiles(ls::WALL);
-	  for (auto w : walls) {
-		  auto pos = ls::getTilePosition(w);
-		  pos += Vector2f(20.f, 20.f); //offset to center
-		  auto e = makeEntity();
-		  e->setPosition(pos);
-		  e->addComponent<PhysicsComponent>(false, Vector2f(40.f, 40.f));
-	  }
-  }
 
-  cout << player->addComponent<HitPointsComponent>()->getHP();
-  cout << " Scene 3 Load Done" << endl;
-  setLoaded(true);
+	//load tempo bar
+	{
+		marker = makeEntity();
+		marker->setPosition(ls::getTilePosition(ls::findTiles(ls::TEMPO)[0])+Vector2f(20.f,0.f));
+		auto t = marker->addComponent<ShapeComponent>();
+		t->setShape<sf::RectangleShape>(Vector2f(10, 1000));
+		t->getShape().setFillColor(Color::White);
+	}
+
+	//Hide Loading
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+	std::cout << " Scene 3 Load Done" << endl;
+	//start music for this level
+	MusicLoader::load("GuilesTheme", true);
+	MusicLoader::play();
+	setLoaded(true);
 }
 
 void Level3Scene::UnLoad() {
-  cout << "Scene 3 UnLoad" << endl;
-  player.reset();
-  ls::unload();
-  Scene::UnLoad();
+	std::cout << "Scene 3 Unload" << endl;
+	MusicLoader::stop();
+	player.reset();
+	ls::unload();
+	Scene::UnLoad();
 }
 
-
-
 void Level3Scene::Update(const double& dt) {
-  Scene::Update(dt);
-  const auto pp = player->getPosition();
-  if (ls::getTileAt(pp) == ls::END) {
-    Engine::ChangeScene((Scene*)&level1);
-  } else if (!player->isAlive()) {
-    Engine::ChangeScene((Scene*)&level3);
-  }
+	Scene::Update(dt);
+	if ((Keyboard::isKeyPressed(Keyboard::R))) {
+		MusicLoader::playSound("bloop");
+		UnLoad();
+		Engine::ChangeScene((Scene*)&menu);
+		MusicLoader::load("Megalovania", true);
+		MusicLoader::play();
+		return;
+	}
+	if ((Keyboard::isKeyPressed(Keyboard::P))) {
+		MusicLoader::playSound("bloop");
+		UnLoad();
+		Engine::ChangeScene((Scene*)&level3);
+		return;
+	}
+	if ((Keyboard::isKeyPressed(Keyboard::Q))) {
+		MusicLoader::playSound("bloop");
+		exit(0);
+	}
 
-  static float rocktime = 0.0f;
-  rocktime -= dt;
+	if (ls::getTileAt(player->getPosition()) == ls::END) {
+		UnLoad();
+		Engine::ChangeScene((Scene*)&menu);
+	}
+	//if(enemyHP < 0)
+	//{
+	  //while(!key pressed)
+	  //{
+	   //display victory overlay
+	  //}
+	// MusicLoader::stop();
+	//Engine::ChangeScene((Scene*)&level2);
+	//}
+	static double barTime = 0.0f;
+	barTime -= dt;
 
-  if (rocktime <= 0.f){
-    rocktime  = 5.f;
-    auto rock = makeEntity();
-    rock->setPosition(ls::getTilePosition(ls::findTiles('r')[0]) +
-                      Vector2f(0, 40) );
-    rock->addComponent<BulletComponent>(30.f);
-    auto s = rock->addComponent<ShapeComponent>();
-    s->setShape<sf::CircleShape>(40.f);
-    s->getShape().setFillColor(Color::Cyan);
-    s->getShape().setOrigin(40.f, 40.f);
-    auto p = rock->addComponent<PhysicsComponent>(true, Vector2f(75.f, 75.f));
-    p->setRestitution(.4f);
-    p->setFriction(.0001f);
-    p->impulse(Vector2f(-3.f, 0));
-    p->setMass(1000000000.f);
-  }
-  
+	if (barTime <= 0.f)//spawn a new bar every x seconds
+	{
+		barTime = tempoTime;//where x = tempo time
+		bar = makeEntity();
+		bar->setPosition(ls::getTilePosition(ls::findTiles(ls::OBAR)[0]));
+		auto s = bar->addComponent<ShapeComponent>();
+		s->setShape<sf::RectangleShape>(Vector2f(25, 1000));
+		s->getShape().setFillColor(Color::White);
+		bar->addComponent<ObarMovementComponent>();//moves along until it reaches the end of the bar, then delete it
+
+		bar = makeEntity();
+		bar->setPosition(ls::getTilePosition(ls::findTiles(ls::BAR)[0]));
+		auto b = bar->addComponent<ShapeComponent>();
+		b->setShape<sf::RectangleShape>(Vector2f(25, 1000));
+		b->getShape().setFillColor(Color::White);
+		bar->addComponent<BarMovementComponent>();//moves along until it reaches the end of the bar, then delete it
+	}
+
 }
 
 void Level3Scene::Render() {
-  ls::render(Engine::GetWindow());
-  Scene::Render();
+	ls::render(Engine::GetWindow());
+	Scene::Render();
 }

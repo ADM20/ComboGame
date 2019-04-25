@@ -14,7 +14,7 @@ void MenuScene::Load() {
   cout << "Menu Load \n";
   {
     auto txt = makeEntity();
-    auto t = txt->addComponent<TextComponent>("Platformer \n1 - Load Test Level \n2 - Options");
+    auto t = txt->addComponent<TextComponent>("Main Menu \n\n1 - Load Test Level \n2 - Level Select\n3 - Options\nQ - quit");
   }
   setLoaded(true);
 }
@@ -33,12 +33,24 @@ void MenuScene::Update(const double& dt) {
 				switch (event.key.code)
 				{
 				case sf::Keyboard::Num1:
-					Engine::ChangeScene(&level3);
+					MusicLoader::playSound("bleep");
+					Engine::ChangeScene(&level1);
 					flag = false;
 					break;
 
 				case sf::Keyboard::Num2:
+					MusicLoader::playSound("bleep");
+					Engine::ChangeScene(&loadScene);
+					flag = false;
+					break;
+				case sf::Keyboard::Num3:
+					MusicLoader::playSound("bleep");
 					Engine::ChangeScene(&optionsMenu);
+					flag = false;
+					break;
+				case sf::Keyboard::Q:
+					MusicLoader::playSound("bloop");
+					exit(1);
 					flag = false;
 					break;
 					// Don't forget to check for other events here

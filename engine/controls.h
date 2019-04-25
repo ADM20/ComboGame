@@ -58,9 +58,9 @@ public:
 	static vector<bool> GetInputSet(const InputManager::Input input);
 	static void Init();
 	static void RebindKey(const InputManager::Input, const sf::Keyboard::Key);
-	static void RebindKey(const InputManager::Input action, const InputManager::JoystickButton button);
 	static void Update();
-	static int PollJoystick();
+	static bool getBool();
+	static void setBool(float);
 	
 	static void Test();
 
@@ -75,5 +75,4 @@ private:
 	static map<InputManager::Input, sf::Keyboard::Key> keyBindings;
 	static map<InputManager::Input, InputManager::JoystickButton> gamepadBindings;
 	static int const numberOfActions = 11;
-
 };

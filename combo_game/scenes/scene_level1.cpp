@@ -1,81 +1,138 @@
 #include "scene_level1.h"
 #include "../components/cmp_player_physics.h"
 #include "../components/cmp_sprite.h"
-#include "../components/cmp_hp.h"
+#include "../components/cmp_actor_movement.h"
+#include "../components/cmp_bar_movement.h"
 #include "../game.h"
 #include <LevelSystem.h>
 #include <iostream>
 #include <thread>
+#include <system_resources.h>
 
 using namespace std;
 using namespace sf;
 
 static shared_ptr<Entity> player;
-
+static shared_ptr<Entity> bar;
+static shared_ptr<Entity> tempo;
+static shared_ptr<Entity> marker;
+static double tempoTime = .48;//time between beats
+Texture spritesheet;
 void Level1Scene::Load() {
-  cout << " Scene 1 Load" << endl;
-  ls::loadLevelFile("res/level_1.txt", 40.0f);
+  std::cout << " Scene 1 Load" << endl;//debug
 
+  ls::loadLevelFile("res/level_1.txt", 40.0f); //load level file 1
+
+  //window
   auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
   ls::setOffset(Vector2f(0, ho));
 
+
+  
+
+  Vector2f playerSize(150.f,300.f);
   // Create player
   {
+	  if (!spritesheet.loadFromFile("res/img/invaders/invaders_sheet.png")) {
+	  cerr << "Failed to load spritesheet!" << std::endl;
+  }
+	  auto rect = IntRect(32, 0, 32, 32);
     player = makeEntity();
     player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
+	//add sprites
     auto s = player->addComponent<ShapeComponent>();
-    s->setShape<sf::RectangleShape>(Vector2f(20.f, 30.f));
+	//pSprite->setTexure(Resources::get<Texture>("res/img/char_3.png"));
+    s->setShape<sf::RectangleShape>(playerSize);
     s->getShape().setFillColor(Color::Magenta);
-    s->getShape().setOrigin(10.f, 15.f);
-
-    player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
-
-	auto hp = player->addComponent<HitPointsComponent>(100);
-	auto hpBar = player->addComponent<ShapeComponent>();
-	hpBar->setShape<sf::RectangleShape>(Vector2f(40.f, 10.f));
-	hpBar->getShape().setOrigin(player->getPosition().x, player->getPosition().y + 15);
-	hpBar->getShape().setFillColor(Color::Magenta);
-
-
-	//vector<shared_ptr<HitPointsComponent>> x = player->GetCompatibleComponent<HitPointsComponent>();
-	//int f = x[0]->getHP();
-	//cout << f << endl;
-	
-
+    s->getShape().setOrigin(playerSize.x/2,playerSize.y/2);
+	//add movement
+	player->addComponent<ActorMovementComponent>();
   }
 
-  // Add physics colliders to level tiles.
+   
+  //load tempo bar
   {
-    auto walls = ls::findTiles(ls::WALL);
-    for (auto w : walls) {
-      auto pos = ls::getTilePosition(w);
-      pos += Vector2f(20.f, 20.f); //offset to center
-      auto e = makeEntity();
-      e->setPosition(pos);
-      e->addComponent<PhysicsComponent>(false, Vector2f(40.f, 40.f));
-    }
+	  tempo = makeEntity();
+	  tempo->setPosition(ls::getTilePosition(ls::findTiles(ls::TEMPO)[0]));
+	  auto s = tempo->addComponent<ShapeComponent>();
+	  s->setShape<sf::RectangleShape>(Vector2f(900, 30));
+	  s->getShape().setFillColor(Color::Blue);
+
+	  
+	  marker = makeEntity();
+	  marker->setPosition(ls::getTilePosition(ls::findTiles(ls::TEMPO)[0]));
+	  auto t = marker->addComponent<ShapeComponent>();
+	  t->setShape<sf::RectangleShape>(Vector2f(40, 60));
+	  t->getShape().setFillColor(Color::White);
+
+	   
   }
 
-  //Simulate long loading times
-  std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-  cout << " Scene 1 Load Done" << endl;
+  //Hide Loading
+  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
+  std::cout << " Scene 1 Load Done" << endl;
+  //start music for this level
+  MusicLoader::load("GuilesTheme",true);
+  MusicLoader::play();
   setLoaded(true);
 }
 
 void Level1Scene::UnLoad() {
-  cout << "Scene 1 Unload" << endl;
+  std::cout << "Scene 1 Unload" << endl;
+  MusicLoader::stop();
   player.reset();
   ls::unload();
   Scene::UnLoad();
 }
 
 void Level1Scene::Update(const double& dt) {
+	Scene::Update(dt);
+	if((Keyboard::isKeyPressed(Keyboard::R))){ 
+		MusicLoader::playSound("bloop");
+		UnLoad();
+		Engine::ChangeScene((Scene*)&menu);
+		MusicLoader::load("Megalovania", true);
+		MusicLoader::play();
+		return; 
+	}
+	if ((Keyboard::isKeyPressed(Keyboard::P))) {
+		MusicLoader::playSound("bloop");
+		UnLoad();
+		Engine::ChangeScene((Scene*)&level1);
+		return;
+	}
+	if ((Keyboard::isKeyPressed(Keyboard::Q))) {
+		MusicLoader::playSound("bloop");
+		exit(0);
+	}
 
   if (ls::getTileAt(player->getPosition()) == ls::END) {
-    Engine::ChangeScene((Scene*)&optionsMenu);
+    Engine::ChangeScene((Scene*)&level2);
   }
-  Scene::Update(dt);
+  //if(enemyHP < 0)
+  //{
+	//while(!key pressed)
+	//{
+	 //display victory overlay
+	//}
+  // MusicLoader::stop();
+  //Engine::ChangeScene((Scene*)&level2);
+  //}
+  static double barTime = 0.0f;
+  barTime -= dt;
+
+  if (barTime <= 0.f)//spawn a new bar every x seconds
+  {
+	  barTime = tempoTime;//where x = tempo time
+	  bar = makeEntity();
+	  bar->setPosition(ls::getTilePosition(ls::findTiles(ls::BAR)[0]));
+	  auto b = bar->addComponent<ShapeComponent>();
+	  b->setShape<sf::RectangleShape>(Vector2f(10, 40));
+	  b->getShape().setFillColor(Color::Magenta);
+	  bar->addComponent<BarMovementComponent>();//moves along until it reaches the end of the bar, then delete it
+  }
+  
 }
 
 void Level1Scene::Render() {
