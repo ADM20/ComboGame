@@ -32,7 +32,7 @@ void IntroScene::Load() {
 void IntroScene::Update(const double& dt) {
 	bool flag = true;
 	RenderWindow &window = Engine::GetWindow();
-	MusicLoader::load("music", true);
+	MusicLoader::load("title", true);
 	MusicLoader::play();
 	while (flag)
 	{

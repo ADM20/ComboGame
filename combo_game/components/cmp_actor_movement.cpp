@@ -5,41 +5,26 @@
 using namespace sf;
 using namespace std;
 
-static double elapsed = 0;
-double tempo = .5;
-double grace = .15;
-bool flag = true;
+
+bool flag = true;//used to check if a key has already been pressed to stop multiple inputs
 
 void ActorMovementComponent::update(double dt) 
 {
-	elapsed -= dt;
 	RenderWindow &window = Engine::GetWindow();
-	if (((Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::D))) && flag == true && elapsed >= (0.0 + grace)) // if we are not in grace period
+	if (((Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::D))) && flag == true && !(InputManager::getBool())) // if we are not in grace period
 	{
 		//InputManager::GetInput(InputManager::Input::Down, InputManager::Mode::IsPressed)
 		//play a sound
-		std::cout << "You MISSED!!" << endl;
+		//std::cout << "You MISSED!!" << endl;
 		flag = false; // key pressed
 	}
-
-	//if we are in grace period
-	if (elapsed <= (0.0 + grace))
+	if (!flag && !InputManager::getBool())
 	{
-		//circle spwans when you can input 
-	
-	
-		//if we ran out of time
-		if (elapsed < (0.0 - grace))
-		{
-			if (flag == true) //if we did not hit a correct key we missed the input
-			{
-				//std::cout << "Missed" << endl;
-			}
-			flag = true;
-			elapsed = tempo;
-		}
+		flag =true;
+	}
+
 		//take input
-		if ((Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::D)) && flag == true)
+		if ((Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::D)) && flag == true && InputManager::getBool())
 				{
 					//step right
 					if (Keyboard::isKeyPressed(Keyboard::D))
@@ -55,10 +40,8 @@ void ActorMovementComponent::update(double dt)
 											}
 					flag = false; // key pressed
 					//play a sound
-					
 				}
 	}
-}
 
 ActorMovementComponent::ActorMovementComponent(Entity* p)
     : _speed(100.0f), Component(p) {}

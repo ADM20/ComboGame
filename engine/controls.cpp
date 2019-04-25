@@ -116,7 +116,7 @@ void InputManager::Update()
 	{
 		_takeInput = false;//stop taking inputs
 	}
-
+	
 	//debug print
 	//InputManager::print();
 }

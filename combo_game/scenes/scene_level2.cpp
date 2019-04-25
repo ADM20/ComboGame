@@ -62,7 +62,7 @@ void Level2Scene::Load() {
 
 	std::cout << " Scene 1 Load Done" << endl;
 	//start music for this level
-	MusicLoader::load("music", true);
+	MusicLoader::load("title", true);
 	MusicLoader::play();
 	setLoaded(true);
 }
