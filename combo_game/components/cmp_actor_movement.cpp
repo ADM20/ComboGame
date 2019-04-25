@@ -6,7 +6,7 @@ using namespace sf;
 using namespace std;
 
 static double elapsed = 0;
-double tempo = .45;
+double tempo = .5;
 double grace = .15;
 bool flag = true;
 

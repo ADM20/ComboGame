@@ -16,7 +16,7 @@ static shared_ptr<Entity> player;
 static shared_ptr<Entity> bar;
 static shared_ptr<Entity> tempo;
 static shared_ptr<Entity> marker;
-static double tempoTime = 1.;//time between beats
+static double tempoTime = .48;//time between beats
 Texture spritesheet;
 void Level1Scene::Load() {
   std::cout << " Scene 1 Load" << endl;//debug
@@ -73,13 +73,14 @@ void Level1Scene::Load() {
 
   std::cout << " Scene 1 Load Done" << endl;
   //start music for this level
-  MusicLoader::load("music",true);
+  MusicLoader::load("GuilesTheme",true);
   MusicLoader::play();
   setLoaded(true);
 }
 
 void Level1Scene::UnLoad() {
   std::cout << "Scene 1 Unload" << endl;
+  MusicLoader::stop();
   player.reset();
   ls::unload();
   Scene::UnLoad();
@@ -88,7 +89,7 @@ void Level1Scene::UnLoad() {
 void Level1Scene::Update(const double& dt) {
 	Scene::Update(dt);
 	if((Keyboard::isKeyPressed(Keyboard::R))){ 
-		//UnLoad();
+		UnLoad();
 		Engine::ChangeScene((Scene*)&menu);
 		return; 
 	}

@@ -16,6 +16,7 @@ Text text;
 void IntroScene::Load() {
   cout << "Menu Load \n";
   {
+	 
 	  static Text t("COMBO TRAINER\nPRESS SPACE", *Resources::get<sf::Font>("RobotoMono-Regular.ttf"));
 	  t.setFillColor(Color(100, 255, 255));
 	  t.setPosition(Vcast<float>(Engine::getWindowSize()) * Vector2f(0.25f, 0.25f));
@@ -23,6 +24,7 @@ void IntroScene::Load() {
 	  t.setOutlineThickness(2);
 	  t.setOutlineColor(sf::Color::White);
 	  Renderer::queue(&t);
+	 
 }
   setLoaded(true);
 }
@@ -30,7 +32,8 @@ void IntroScene::Load() {
 void IntroScene::Update(const double& dt) {
 	bool flag = true;
 	RenderWindow &window = Engine::GetWindow();
-
+	MusicLoader::load("music", true);
+	MusicLoader::play();
 	while (flag)
 	{
 		Event event;
