@@ -33,18 +33,22 @@ void LoadScene::Update(const double& dt) {
 				{
 				case sf::Keyboard::Num1:
 					//if(scene 1 is unlocked){
+					MusicLoader::playSound("bleep");
 					Engine::ChangeScene(&level1);
 					flag = false;
 					break;
 				case sf::Keyboard::Num2:
 					Engine::ChangeScene(&level2);
+					MusicLoader::playSound("bleep");
 					flag = false;
 					break;
 				case sf::Keyboard::Num3:
 					Engine::ChangeScene(&menu);
+					MusicLoader::playSound("bleep");
 					flag = false;
 					break;
 				case sf::Keyboard::R:
+					MusicLoader::playSound("bloop");
 					Engine::ChangeScene(&menu);
 					flag = false;
 					break;

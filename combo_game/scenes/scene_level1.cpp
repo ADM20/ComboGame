@@ -89,11 +89,21 @@ void Level1Scene::UnLoad() {
 void Level1Scene::Update(const double& dt) {
 	Scene::Update(dt);
 	if((Keyboard::isKeyPressed(Keyboard::R))){ 
+		MusicLoader::playSound("bloop");
 		UnLoad();
 		Engine::ChangeScene((Scene*)&menu);
+		MusicLoader::load("Megalovania", true);
+		MusicLoader::play();
 		return; 
 	}
+	if ((Keyboard::isKeyPressed(Keyboard::P))) {
+		MusicLoader::playSound("bloop");
+		UnLoad();
+		Engine::ChangeScene((Scene*)&level1);
+		return;
+	}
 	if ((Keyboard::isKeyPressed(Keyboard::Q))) {
+		MusicLoader::playSound("bloop");
 		exit(0);
 	}
 

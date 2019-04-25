@@ -33,19 +33,23 @@ void MenuScene::Update(const double& dt) {
 				switch (event.key.code)
 				{
 				case sf::Keyboard::Num1:
+					MusicLoader::playSound("bleep");
 					Engine::ChangeScene(&level1);
 					flag = false;
 					break;
 
 				case sf::Keyboard::Num2:
+					MusicLoader::playSound("bleep");
 					Engine::ChangeScene(&loadScene);
 					flag = false;
 					break;
 				case sf::Keyboard::Num3:
+					MusicLoader::playSound("bleep");
 					Engine::ChangeScene(&optionsMenu);
 					flag = false;
 					break;
 				case sf::Keyboard::Q:
+					MusicLoader::playSound("bloop");
 					exit(1);
 					flag = false;
 					break;

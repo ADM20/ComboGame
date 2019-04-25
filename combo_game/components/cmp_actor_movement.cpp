@@ -11,21 +11,14 @@ bool flag = true;//used to check if a key has already been pressed to stop multi
 void ActorMovementComponent::update(double dt) 
 {
 	RenderWindow &window = Engine::GetWindow();
-	if (((Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::D))) && flag == true && !(InputManager::getBool())) // if we are not in grace period
-	{
-		//InputManager::GetInput(InputManager::Input::Down, InputManager::Mode::IsPressed)
-		//play a sound
-		//std::cout << "You MISSED!!" << endl;
-		flag = false; // key pressed
-	}
-	if (!flag && !InputManager::getBool())
+	if (!flag && !InputManager::getBool())//allows an input again
 	{
 		flag =true;
 	}
-
 		//take input
 		if ((Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::D)) && flag == true && InputManager::getBool())
-				{
+//if((InputManager::GetInput(InputManager::Input::Right, InputManager::Mode::IsPressed)|| InputManager::GetInput(InputManager::Input::Left, InputManager::Mode::IsPressed))&& InputManager::getBool() )
+	{
 					//step right
 					if (Keyboard::isKeyPressed(Keyboard::D))
 					{
@@ -40,6 +33,7 @@ void ActorMovementComponent::update(double dt)
 											}
 					flag = false; // key pressed
 					//play a sound
+					MusicLoader::playSound("bloop");
 				}
 	}
 

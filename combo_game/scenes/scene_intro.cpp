@@ -32,7 +32,7 @@ void IntroScene::Load() {
 void IntroScene::Update(const double& dt) {
 	bool flag = true;
 	RenderWindow &window = Engine::GetWindow();
-	MusicLoader::load("title", true);
+	MusicLoader::load("Megalovania", true);
 	MusicLoader::play();
 	while (flag)
 	{
@@ -45,6 +45,7 @@ void IntroScene::Update(const double& dt) {
 				switch (event.key.code)
 				{
 				case sf::Keyboard::Space:
+					MusicLoader::playSound("bleep");
 					Engine::ChangeScene(&menu);
 					flag = false;
 					break;
