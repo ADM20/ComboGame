@@ -83,38 +83,44 @@ void InputManager::Update()
 		}
 	}
 
-	for each(pair<InputManager::Input, InputManager::JoystickButton> p in gamepadBindings)
-	{
-		//set triggers true of false for key pressed
-		if (Joystick::isButtonPressed(0, p.second))
-		{
-			//check if it was already pressed
-			bool pressedLastFrame = InputManager::triggers[p.first][1];
-			//set it
-			InputManager::triggers[p.first][0] = true;
+	//cout << "left "<< ": " << InputManager::GetInput(InputManager::Input::Left, InputManager::Mode::IsPressed)<<endl;
 
-			//if it was not pressed last frame set flag for key down this frame to true, else to false
-			if (!pressedLastFrame)
+	if (Joystick::isConnected(0))
+	{
+		for each(pair<InputManager::Input, InputManager::JoystickButton> p in gamepadBindings)
+		{
+			//set triggers true of false for key pressed
+			if (Joystick::isButtonPressed(0, p.second))
 			{
-				InputManager::triggers[p.first][1] = true;
-				//cout << p.first << ":" << InputManager::triggers[p.first][1] << endl;
+				//check if it was already pressed
+				bool pressedLastFrame = InputManager::triggers[p.first][1];
+				//set it
+				InputManager::triggers[p.first][0] = true;
+
+				//if it was not pressed last frame set flag for key down this frame to true, else to false
+				if (!pressedLastFrame)
+				{
+					InputManager::triggers[p.first][1] = true;
+					//cout << p.first << ":" << InputManager::triggers[p.first][1] << endl;
+				}
+				else
+				{
+					InputManager::triggers[p.first][1] = false;
+					//cout << p.first << ":" << InputManager::triggers[p.first][1] << endl;
+				}
 			}
 			else
 			{
+				//set trigger to false and key down this frame to false
+				InputManager::triggers[p.first][0] = false;
 				InputManager::triggers[p.first][1] = false;
-				//cout << p.first << ":" << InputManager::triggers[p.first][1] << endl;
 			}
 		}
-		else
+		if ((_grace - clockTime.getElapsedTime().asSeconds()) <= 0.0f)//if we are not in grace period anymore
 		{
-			//set trigger to false and key down this frame to false
-			InputManager::triggers[p.first][0] = false;
-			InputManager::triggers[p.first][1] = false;
+			_takeInput = false;//stop taking inputs
 		}
-	}
-	if ((_grace - clockTime.getElapsedTime().asSeconds()) <= 0.0f)//if we are not in grace period anymore
-	{
-		_takeInput = false;//stop taking inputs
+		//cout << "left " << ": " << InputManager::GetInput(InputManager::Input::Left, InputManager::Mode::IsPressed)<<endl;
 	}
 	
 	//debug print
