@@ -16,13 +16,13 @@ void ActorMovementComponent::update(double dt)
 		flag =true;
 	}
 
-	cout << "getbool " << InputManager::getBool() << endl;
-	cout << "right " << InputManager::GetInput(InputManager::Input::Right, InputManager::Mode::IsPressed) << endl;
-	cout << "left " << InputManager::GetInput(InputManager::Input::Left, InputManager::Mode::IsPressed) << endl;
+	//cout << "getbool " << InputManager::getBool() << endl;
+	//cout << "right " << InputManager::GetInput(InputManager::Input::Right, InputManager::Mode::IsPressed) << endl;
+	//cout << "left " << InputManager::GetInput(InputManager::Input::Left, InputManager::Mode::IsPressed) << endl;
 
 		//take input
 		//if ((Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::D)) && flag == true && InputManager::getBool())
-	if((InputManager::GetInput(InputManager::Input::Right, InputManager::Mode::IsPressed)|| InputManager::GetInput(InputManager::Input::Left, InputManager::Mode::IsPressed))&& InputManager::getBool() )
+	if((InputManager::GetInput(InputManager::Input::Right, InputManager::Mode::IsPressed)|| InputManager::GetInput(InputManager::Input::Left, InputManager::Mode::IsPressed))&& InputManager::getBool() && flag ==true )
 	{
 		
 

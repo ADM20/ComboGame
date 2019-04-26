@@ -25,7 +25,8 @@ public:
 	  WAYPOINT = '+',
 	  TEMPO = 'T',
 	  BAR = 't',
-	  INPUT = 'n'
+	  INPUT = 'n',
+	  OBAR = 'q'
   };
 
   static Tile getTile(sf::Vector2ul);

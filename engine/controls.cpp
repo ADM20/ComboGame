@@ -5,7 +5,7 @@ sf::Clock clockTime;//start a timer
 
 vector<vector<bool>> InputManager::triggers = {};
 bool _takeInput = false;
-float _grace = 1.0f;
+float _grace = 0.2f;
 
 void InputManager::Init()
 {
@@ -116,11 +116,12 @@ void InputManager::Update()
 				InputManager::triggers[p.first][1] = false;
 			}
 		}
-		if ((_grace - clockTime.getElapsedTime().asSeconds()) <= 0.0f)//if we are not in grace period anymore
-		{
-			_takeInput = false;//stop taking inputs
-		}
+		
 		//cout << "left " << ": " << InputManager::GetInput(InputManager::Input::Left, InputManager::Mode::IsPressed)<<endl;
+	}
+	if ((_grace - clockTime.getElapsedTime().asSeconds()) <= 0.0f)//if we are not in grace period anymore
+	{
+		_takeInput = false;//stop taking inputs
 	}
 	
 	//debug print

@@ -7,6 +7,7 @@ LoadScene loadScene;
 MenuScene menu;
 Level1Scene level1;
 Level2Scene level2;
+Level3Scene level3;
 OptionsScene optionsMenu;
 IntroScene intro;
 

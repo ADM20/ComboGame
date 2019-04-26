@@ -43,7 +43,7 @@ void LoadScene::Update(const double& dt) {
 					flag = false;
 					break;
 				case sf::Keyboard::Num3:
-					Engine::ChangeScene(&menu);
+					Engine::ChangeScene(&level3);
 					MusicLoader::playSound("bleep");
 					flag = false;
 					break;

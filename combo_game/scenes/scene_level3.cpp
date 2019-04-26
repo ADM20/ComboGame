@@ -1,4 +1,4 @@
-#include "scene_level2.h"
+#include "scene_level3.h"
 #include "../components/cmp_player_physics.h"
 #include "../components/cmp_sprite.h"
 #include "../components/cmp_actor_movement.h"
@@ -20,10 +20,10 @@ static shared_ptr<Entity> marker;
 
 static double tempoTime = .48;//time between beats
 
-void Level2Scene::Load() {
-	std::cout << " Scene 2 Load" << endl;//debug
+void Level3Scene::Load() {
+	std::cout << " Scene 3 Load" << endl;//debug
 
-	ls::loadLevelFile("res/level_2.txt", 40.0f); //load level file 1
+	ls::loadLevelFile("res/level_3.txt", 40.0f); //load level file 1
 
 	//window
 	auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
@@ -59,22 +59,22 @@ void Level2Scene::Load() {
 	//Hide Loading
 	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
-	std::cout << " Scene 2 Load Done" << endl;
+	std::cout << " Scene 3 Load Done" << endl;
 	//start music for this level
 	MusicLoader::load("GuilesTheme", true);
 	MusicLoader::play();
 	setLoaded(true);
 }
 
-void Level2Scene::UnLoad() {
-	std::cout << "Scene 2 Unload" << endl;
+void Level3Scene::UnLoad() {
+	std::cout << "Scene 3 Unload" << endl;
 	MusicLoader::stop();
 	player.reset();
 	ls::unload();
 	Scene::UnLoad();
 }
 
-void Level2Scene::Update(const double& dt) {
+void Level3Scene::Update(const double& dt) {
 	Scene::Update(dt);
 	if ((Keyboard::isKeyPressed(Keyboard::R))) {
 		MusicLoader::playSound("bloop");
@@ -87,16 +87,17 @@ void Level2Scene::Update(const double& dt) {
 	if ((Keyboard::isKeyPressed(Keyboard::P))) {
 		MusicLoader::playSound("bloop");
 		UnLoad();
-		Engine::ChangeScene((Scene*)&level2);
+		Engine::ChangeScene((Scene*)&level3);
 		return;
 	}
 	if ((Keyboard::isKeyPressed(Keyboard::Q))) {
 		MusicLoader::playSound("bloop");
 		exit(0);
 	}
+
 	if (ls::getTileAt(player->getPosition()) == ls::END) {
 		UnLoad();
-		Engine::ChangeScene((Scene*)&level3);
+		Engine::ChangeScene((Scene*)&menu);
 	}
 	//if(enemyHP < 0)
 	//{
@@ -130,7 +131,7 @@ void Level2Scene::Update(const double& dt) {
 
 }
 
-void Level2Scene::Render() {
+void Level3Scene::Render() {
 	ls::render(Engine::GetWindow());
 	Scene::Render();
 }
