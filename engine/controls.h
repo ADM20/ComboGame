@@ -58,9 +58,11 @@ public:
 	static vector<bool> GetInputSet(const InputManager::Input input);
 	static void Init();
 	static void RebindKey(const InputManager::Input, const sf::Keyboard::Key);
+	static void RebindKey(const InputManager::Input action, const InputManager::JoystickButton button);
 	static void Update();
 	static bool getBool();
 	static void setBool(float);
+	static int PollJoystick();
 	
 	static void Test();
 
