@@ -4,6 +4,7 @@
 #include "../components/cmp_actor_movement.h"
 #include "../components/cmp_bar_movement.h"
 #include "../components/cmp_hp.h"
+#include "../components/cmp_attack.h"
 #include "../game.h"
 #include <LevelSystem.h>
 #include <iostream>
@@ -19,6 +20,9 @@ static shared_ptr<Entity> playerHP;
 static shared_ptr<Entity> bar;
 static shared_ptr<Entity> tempo;
 static shared_ptr<Entity> marker;
+static shared_ptr<Entity> enemy;
+static shared_ptr<Entity> enemyHP;
+
 static double tempoTime = .48;//time between beats
 Texture spritesheet;
 void Level1Scene::Load() {
@@ -53,7 +57,7 @@ void Level1Scene::Load() {
 
 
 
-		//bar to show HP (index using <ShapeComponent>()[2])
+		//bar to show HP
 		playerHP = makeEntity();
 		auto hp = playerHP->addComponent<ShapeComponent>();
 		hp->setShape<sf::RectangleShape>(barSize);
@@ -64,6 +68,44 @@ void Level1Scene::Load() {
 		//add HP
 		player->addComponent<HitPointsComponent>(100);
 		player->GetCompatibleComponent<HitPointsComponent>()[0]->setBar(playerHP);
+
+		//set enemy as target of attacks
+		player->addComponent<AttackComponent>(enemy);
+	}
+
+	//create enemy
+	{
+		if (!spritesheet.loadFromFile("res/img/invaders/invaders_sheet.png")) {
+			cerr << "Failed to load spritesheet!" << std::endl;
+		}
+		auto rect = IntRect(32, 0, 32, 32);
+		enemy = makeEntity();
+		enemy->setPosition(ls::getTilePosition(ls::findTiles(ls::END)[0]));
+		//add sprites
+		auto s = enemy->addComponent<ShapeComponent>();
+		//pSprite->setTexure(Resources::get<Texture>("res/img/char_3.png"));
+		s->setShape<sf::RectangleShape>(playerSize);
+		s->getShape().setFillColor(Color::Yellow);
+		s->getShape().setOrigin(playerSize.x / 2, playerSize.y / 2);
+		//add movement
+		enemy->addComponent<ActorMovementComponent>();
+
+		//bar to show HP
+		enemyHP = makeEntity();
+		auto hp = enemyHP->addComponent<ShapeComponent>();
+		hp->setShape<sf::RectangleShape>(barSize);
+		hp->getShape().setFillColor(Color::Red);
+		hp->getShape().setOrigin(barSize.x / 2, barSize.y / 2);
+		enemyHP->setPosition({ enemy->getPosition().x, enemy->getPosition().y - 200 });
+
+		//add HP
+		enemy->addComponent<HitPointsComponent>(100);
+		enemy->GetCompatibleComponent<HitPointsComponent>()[0]->setBar(enemyHP);
+
+		//set it to attack the player
+		enemy->addComponent<AttackComponent>(player);
+
+		enemy->GetCompatibleComponent<AttackComponent>()[0]->Attack(80);
 	}
 
 

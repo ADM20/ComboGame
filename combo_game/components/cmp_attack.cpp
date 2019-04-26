@@ -3,15 +3,14 @@
 using namespace std;
 using namespace sf;
 
-AttackComponent::AttackComponent(Entity* p) : Component(p)
+AttackComponent::AttackComponent(Entity* p, shared_ptr<Entity> t) : Component(p)
 {
-	
+	_target = t;
 }
 
 
-void AttackComponent::Attack(Entity* oponentHpBar, int damage)
+void AttackComponent::Attack(int damage)
 {
-	vector<shared_ptr<HitPointsComponent>> x = oponentHpBar->GetCompatibleComponent<HitPointsComponent>();
-	x[0]->changeHP(-damage);
+	_target->GetCompatibleComponent<HitPointsComponent>()[0]->changeHP(-damage);
 	cout << damage << " damge done" << endl;
 }
