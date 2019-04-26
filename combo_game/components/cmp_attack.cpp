@@ -9,9 +9,9 @@ AttackComponent::AttackComponent(Entity* p) : Component(p)
 }
 
 
-void AttackComponent::Attack(Entity* oponent, int damage)
+void AttackComponent::Attack(Entity* oponentHpBar, int damage)
 {
-	vector<shared_ptr<HitPointsComponent>> x = oponent->GetCompatibleComponent<HitPointsComponent>();
+	vector<shared_ptr<HitPointsComponent>> x = oponentHpBar->GetCompatibleComponent<HitPointsComponent>();
 	x[0]->changeHP(-damage);
 	cout << damage << " damge done" << endl;
 }
