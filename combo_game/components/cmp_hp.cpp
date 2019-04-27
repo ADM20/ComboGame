@@ -30,12 +30,16 @@ void HitPointsComponent::setBar(shared_ptr<Entity> bar, Color c)
 
 void HitPointsComponent::update(double dt)
 {
+	
 	float percentage = (_hp / 100.0f);
 
 	Vector2f barSize(100, 10);
 	Vector2f displayBarScale(percentage, 1);
 
 	Vector2f output = barSize * displayBarScale;
+	if (output.y < 0)
+		output.y = 0;
+	cout << output.y << endl;
 	auto b = _bar->GetCompatibleComponent<ShapeComponent>()[0];
 	b->setShape<sf::RectangleShape>(output);
 	b->getShape().setFillColor(_barCol);

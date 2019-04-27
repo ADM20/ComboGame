@@ -11,6 +11,7 @@
 #include <iostream>
 #include <thread>
 #include <system_resources.h>
+#include "engine.h"
 
 using namespace std;
 using namespace sf;
@@ -26,9 +27,11 @@ static shared_ptr<Entity> enemyHP;
 static double tempoTime = .48;//time between beats
 Texture spritesheet;
 
-vector<InputManager::Input> actionQueue;
+
 int attackDamage = 5;
 int missDamage = 10;
+
+bool inputAllowed = true;//used to check if a key has already been pressed to stop multiple inputs
 
 
 void Level1Scene::Load() {
@@ -38,7 +41,10 @@ void Level1Scene::Load() {
 		SaveSystem::levelUnlocked = 1;
 
 	//load sequence of required moves
-	actionQueue = { InputManager::Up, InputManager::Down, InputManager::LightPunch, InputManager::Up, InputManager::Down, InputManager::LightPunch, InputManager::Up, InputManager::Down, InputManager::LightPunch, InputManager::Up, InputManager::Down, InputManager::LightPunch, InputManager::Up, InputManager::Down, InputManager::LightPunch, InputManager::Up, InputManager::Down, InputManager::LightPunch, InputManager::Up, InputManager::Down, InputManager::LightPunch };
+	vector<InputManager::Input> actionQueue = { InputManager::Up, InputManager::Down, InputManager::LightPunch, InputManager::Up, InputManager::Down, InputManager::LightPunch, InputManager::Up, InputManager::Down, InputManager::LightPunch, InputManager::Up, InputManager::Down, InputManager::LightPunch, InputManager::Up, InputManager::Down, InputManager::LightPunch, InputManager::Up, InputManager::Down, InputManager::LightPunch, InputManager::Up, InputManager::Down, InputManager::LightPunch };
+	Fight::index = 0;
+	Fight::setSequence(actionQueue);
+
 
 	std::cout << " Scene 1 Load" << endl;//debug
 
@@ -60,8 +66,6 @@ void Level1Scene::Load() {
 	//create enemy
 	{
 		enemy = FighterFactory::newEnemy(enemy, enemyHP, spritesheet, playerSize, player, this);
-
-		//enemy->GetCompatibleComponent<AttackComponent>()[0]->Attack(attackDamage);
 	}
 
 
@@ -124,6 +128,26 @@ void Level1Scene::Update(const double& dt) {
 		MusicLoader::loadSound("bloop");
 		MusicLoader::playSound();
 		exit(0);
+	}
+
+	
+	if (!inputAllowed && !InputManager::getBool())//allows an input again
+	{
+		inputAllowed = true;
+	}
+	//if a bound input is pressed
+	if (InputManager::getBool() && inputAllowed == true)
+	{
+		
+		if (Fight::hit(InputManager::InputPressed))
+		{
+			player->GetCompatibleComponent<AttackComponent>()[0]->Attack(attackDamage);
+		}
+		else
+		{
+			enemy->GetCompatibleComponent<AttackComponent>()[0]->Attack(missDamage);
+		}
+		
 	}
 
 	

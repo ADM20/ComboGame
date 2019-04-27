@@ -10,6 +10,7 @@
 #include <thread>
 #include <system_resources.h>
 
+
 using namespace std;
 using namespace sf;
 

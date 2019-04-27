@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "fight_controller.h"
 #include "scenes/scene_level1.h"
 #include "scenes/scene_level2.h"
 #include "scenes/scene_level3.h"

@@ -63,6 +63,8 @@ public:
 	static bool getBool();
 	static void setBool(float);
 	static int PollJoystick();
+	static bool AnyInputPressed();
+	static Input InputPressed;
 	
 	static void Test();
 

@@ -7,6 +7,8 @@ vector<vector<bool>> InputManager::triggers = {};
 bool _takeInput = false;
 float _grace = 0.2f;
 
+InputManager::Input InputManager::InputPressed = InputManager::Input::Confirm;
+
 void InputManager::Init()
 {
 	for (int i = 0; i < numberOfActions; i++)
@@ -20,8 +22,6 @@ void InputManager::Init()
 		InputManager::triggers.push_back(line);
 	}
 }
-
-
 
 vector<vector<bool>> InputManager::GetAllInputs()
 {
@@ -37,6 +37,18 @@ bool InputManager::GetInput(const InputManager::Input index, const InputManager:
 {
 	return InputManager::triggers[index][mode];
 }
+
+//tell if at least one input bind is pressed
+bool InputManager::AnyInputPressed()
+{
+	for(int i = 0; i < InputManager::triggers.size(); i++)
+	{
+		if (triggers[i][0])
+			return true;
+	}
+	return false;
+}
+
 
 
 void InputManager::Test()
@@ -81,6 +93,9 @@ void InputManager::Update()
 		//set triggers true of false for key pressed
 		if (Keyboard::isKeyPressed(p.second))
 		{
+			//allert that a button is pressed
+			InputPressed = p.first;
+
 			//check if it was already pressed
 			bool pressedLastFrame = InputManager::triggers[p.first][1];
 			//set it
@@ -115,6 +130,9 @@ void InputManager::Update()
 			//set triggers true of false for key pressed
 			if (Joystick::isButtonPressed(0, p.second))
 			{
+				//allert that a button is pressed
+				InputPressed = p.first;
+
 				//check if it was already pressed
 				bool pressedLastFrame = InputManager::triggers[p.first][1];
 				//set it
