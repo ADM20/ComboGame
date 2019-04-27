@@ -12,13 +12,12 @@ void OptionsScene::Load() {
   cout << "Options Load \n";
   {
     auto txt = makeEntity();
-    auto t = txt->addComponent<TextComponent>("Options Menu \n\n 1 - Keybinds \n 2 - Resolution \n 3 - Volume\n  \n R - Return");
+    auto t = txt->addComponent<TextComponent>("Options Menu \n\n 1 - Keybinds\n 2 - Resolution\n 3 - Volume\n\n R - Return to Menu");
   }
   setLoaded(true);
 }
 
 void OptionsScene::Update(const double& dt) {
-  //cout << "options Update "<<dt<<"\n";
 	bool flag = true;
 	RenderWindow &window = Engine::GetWindow();
 	while (flag)
@@ -34,6 +33,7 @@ void OptionsScene::Update(const double& dt) {
 				case sf::Keyboard::Num1:
 					MusicLoader::loadSound("bleep");
 					MusicLoader::playSound();
+					Engine::ChangeScene(&keybinds);
 					//call keybind scene
 					flag = false;
 					break;

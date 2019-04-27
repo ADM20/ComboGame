@@ -9,6 +9,7 @@
 #include "scenes/scene_menu.h"
 #include "scenes/scene_loadlevel.h"
 #include "scenes/scene_intro.h"
+#include "scenes/scene_keybinds.h"
 
 extern MenuScene menu;
 extern Level1Scene level1;
@@ -17,3 +18,4 @@ extern OptionsScene optionsMenu;
 extern LoadScene loadScene;
 extern IntroScene intro;
 extern Level3Scene level3;
+extern KeybindsScene keybinds;
