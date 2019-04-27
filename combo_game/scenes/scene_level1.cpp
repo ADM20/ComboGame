@@ -159,9 +159,6 @@ void Level1Scene::Update(const double& dt) {
 		exit(0);
 	}
 
-	if (ls::getTileAt(player->getPosition()) == ls::END) {
-		Engine::ChangeScene((Scene*)&level2);
-	}
 	//if(enemyHP < 0)
 	//{
 	  //while(!key pressed)
