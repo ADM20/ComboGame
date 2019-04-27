@@ -42,7 +42,7 @@ void Level1Scene::Load() {
 	Vector2f playerSize(150.f, 300.f);
 	// Create player
 	{
-		player = FighterFactory::newPlayer(player, playerHP, spritesheet, playerSize, enemy, dynamic_cast<Scene*>(level1));
+		player = FighterFactory::newPlayer(player, playerHP, spritesheet, playerSize, enemy, this);
 	}
 
 	//create enemy

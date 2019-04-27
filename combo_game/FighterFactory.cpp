@@ -1,12 +1,12 @@
 #include "FighterFactory.h"
 
-shared_ptr<Entity> FighterFactory::newPlayer(shared_ptr<Entity> p, shared_ptr<Entity> hpBar, Texture spritesheet, Vector2f size, shared_ptr<Entity>target, Scene s)
+shared_ptr<Entity> FighterFactory::newPlayer(shared_ptr<Entity> p, shared_ptr<Entity> hpBar, Texture spritesheet, Vector2f size, shared_ptr<Entity>target, Level1Scene* sc)
 {
 	if (!spritesheet.loadFromFile("res/img/invaders/invaders_sheet.png")) {
 			cerr << "Failed to load spritesheet!" << std::endl;
 		}
 		auto rect = IntRect(32, 0, 32, 32);
-		p = s.makeEntity();
+		p = sc->makeEntity();
 		p->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
 		//add sprites
 		auto s = p->addComponent<ShapeComponent>();
@@ -20,7 +20,7 @@ shared_ptr<Entity> FighterFactory::newPlayer(shared_ptr<Entity> p, shared_ptr<En
 
 
 		//bar to show HP
-		hpBar = s.makeEntity();
+		hpBar = sc->makeEntity();
 		auto hp = hpBar->addComponent<ShapeComponent>();
 
 		//add HP

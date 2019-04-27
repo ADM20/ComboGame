@@ -17,5 +17,5 @@ using namespace sf;
 class FighterFactory {
 public:
 	static shared_ptr<Entity> newEnemy(shared_ptr<Entity> e, shared_ptr<Entity> hpBar, shared_ptr<Entity> target);
-	//static shared_ptr<Entity> newPlayer(shared_ptr<Entity> p, shared_ptr<Entity> hpBar, Texture spritesheet, Vector2f size, shared_ptr<Entity> target, Scene s);
+	static shared_ptr<Entity> newPlayer(shared_ptr<Entity> p, shared_ptr<Entity> hpBar, Texture spritesheet, Vector2f size, shared_ptr<Entity> target, Level1Scene* sc);
 };
