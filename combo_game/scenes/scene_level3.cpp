@@ -1,25 +1,38 @@
-#include "scene_level3.h"
+#include "scene_level1.h"
 #include "../components/cmp_player_physics.h"
 #include "../components/cmp_sprite.h"
 #include "../components/cmp_actor_movement.h"
 #include "../components/cmp_bar_movement.h"
-#include "../components/cmp_obar_movement.h"
+#include "../components/cmp_hp.h"
+#include "../components/cmp_attack.h"
+#include "../FighterFactory.h"
 #include "../game.h"
 #include <LevelSystem.h>
 #include <iostream>
 #include <thread>
 #include <system_resources.h>
-
+#include "engine.h"
 
 using namespace std;
 using namespace sf;
 
 static shared_ptr<Entity> player;
+static shared_ptr<Entity> playerHP;
 static shared_ptr<Entity> bar;
 static shared_ptr<Entity> tempo;
 static shared_ptr<Entity> marker;
+static shared_ptr<Entity> enemy;
+static shared_ptr<Entity> enemyHP;
 
 static double tempoTime = .48;//time between beats
+Texture spritesheet;
+
+
+int attackDamage = 5;
+int missDamage = 10;
+
+bool inputAllowed = true;//used to check if a key has already been pressed to stop multiple inputs
+
 
 void Level3Scene::Load() {
 	std::cout << " Scene 3 Load" << endl;//debug
@@ -36,18 +49,12 @@ void Level3Scene::Load() {
 	Vector2f playerSize(150.f, 300.f);
 	// Create player
 	{
+		player = FighterFactory::newPlayer(player, playerHP, spritesheet, playerSize, enemy, this);
+	}
 
-		auto rect = IntRect(32, 0, 32, 32);
-		player = makeEntity();
-		player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
-		//add sprites
-		auto s = player->addComponent<ShapeComponent>();
-		//pSprite->setTexure(Resources::get<Texture>("res/img/char_3.png"));
-		s->setShape<sf::RectangleShape>(playerSize);
-		s->getShape().setFillColor(Color::Magenta);
-		s->getShape().setOrigin(playerSize.x / 2, playerSize.y / 2);
-		//add movement
-		player->addComponent<ActorMovementComponent>();
+	//create enemy
+	{
+		enemy = FighterFactory::newEnemy(enemy, enemyHP, spritesheet, playerSize, player, this);
 	}
 
 
