@@ -33,6 +33,8 @@ void BarMovementComponent::move(const sf::Vector2f& p) {
   else
   {
 	  //play a sound for when deleted
+	  MusicLoader::loadSound("bam");
+	  MusicLoader::playSound();
 	  InputManager::setBool(0.1f);
 	  _parent->setForDelete();
   }

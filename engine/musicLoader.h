@@ -10,7 +10,9 @@ public:
 	static void load(std::string ,bool );//attempt to load a new music file - Input name of file no extension or filepath required
 	static void play();//play current music file
 	static void stop();//stop current music file
-	static void playSound(std::string);
+	static void playSound();
 	static void setMusicVolume(float);
 	static void setSoundVolume(float);
+	static void loadSound(std::string);
+	static void update();
 };

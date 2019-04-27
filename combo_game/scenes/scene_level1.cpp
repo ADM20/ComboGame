@@ -117,7 +117,8 @@ void Level1Scene::UnLoad() {
 void Level1Scene::Update(const double& dt) {
 	Scene::Update(dt);
 	if ((Keyboard::isKeyPressed(Keyboard::R))) {
-		MusicLoader::playSound("bloop");
+		MusicLoader::loadSound("bloop");
+		MusicLoader::playSound();
 		UnLoad();
 		Engine::ChangeScene((Scene*)&menu);
 		MusicLoader::load("Megalovania", true);
@@ -125,19 +126,18 @@ void Level1Scene::Update(const double& dt) {
 		return;
 	}
 	if ((Keyboard::isKeyPressed(Keyboard::P))) {
-		MusicLoader::playSound("bloop");
+		MusicLoader::loadSound("bloop");
+		MusicLoader::playSound();
 		UnLoad();
 		Engine::ChangeScene((Scene*)&level1);
 		return;
 	}
 	if ((Keyboard::isKeyPressed(Keyboard::Q))) {
-		MusicLoader::playSound("bloop");
+		MusicLoader::loadSound("bloop");
+		MusicLoader::playSound();
 		exit(0);
 	}
 
-	if (ls::getTileAt(player->getPosition()) == ls::END) {
-		Engine::ChangeScene((Scene*)&level2);
-	}
 	//if(enemyHP < 0)
 	//{
 	  //while(!key pressed)

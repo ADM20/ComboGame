@@ -15,19 +15,13 @@ void ActorMovementComponent::update(double dt)
 	{
 		flag =true;
 	}
-
-	//cout << "getbool " << InputManager::getBool() << endl;
-	//cout << "right " << InputManager::GetInput(InputManager::Input::Right, InputManager::Mode::IsPressed) << endl;
-	//cout << "left " << InputManager::GetInput(InputManager::Input::Left, InputManager::Mode::IsPressed) << endl;
-
 		//take input
-		//if ((Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::D)) && flag == true && InputManager::getBool())
 	if((InputManager::GetInput(InputManager::Input::Right, InputManager::Mode::IsPressed)|| InputManager::GetInput(InputManager::Input::Left, InputManager::Mode::IsPressed))&& InputManager::getBool() && flag ==true )
 	{
 		
 
 					//step right
-					if (Keyboard::isKeyPressed(Keyboard::D))
+					if (InputManager::GetInput(InputManager::Input::Right, InputManager::Mode::IsPressed))
 					{
 						std::cout << "Move Right" << endl;
 						move(100,0);
@@ -40,14 +34,22 @@ void ActorMovementComponent::update(double dt)
 											}
 					flag = false; // key pressed
 					//play a sound
-					MusicLoader::playSound("bloop");
+					{
+						MusicLoader::loadSound("bloop");
+						MusicLoader::playSound();
+					}
 				}
 	}
 
 ActorMovementComponent::ActorMovementComponent(Entity* p)
     : _speed(100.0f), Component(p) {}
 
-bool ActorMovementComponent::validMove(const sf::Vector2f& pos) {
+bool ActorMovementComponent::validMove(const sf::Vector2f& pos) 
+{
+	if (pos.x <= 100.f)
+	{
+		return false;
+	}
    return (LevelSystem::getTileAt(pos) != LevelSystem::WALL);
   // return true;
 }

@@ -1,10 +1,15 @@
 #include "musicLoader.h"
+#include <deque>
 
 sf::Music music;
 sf::SoundBuffer buffer;
+std::deque<sf::Sound> soundInstances;
 sf::Sound sound;
+sf::Sound bam;
+
 float _soundVolume = 50.0f;
 float _musicVolume = 50.0f;
+
 void MusicLoader::load(std::string fileName)//default will loop
 {
 	if (!music.openFromFile("res/audio/" + fileName + ".wav")) //try to load the file given
@@ -25,7 +30,6 @@ void MusicLoader::load(std::string fileName, bool loop)//false to not loop to lo
 	//music.setPlayingOffset(sf::seconds(80.f));
 	music.setVolume(_musicVolume);
 	music.setLoop(loop);//loop music if true
-	
 }
 void MusicLoader::play()
 {
@@ -43,13 +47,28 @@ void MusicLoader::setMusicVolume(float volume)
 {
 	_musicVolume = volume;
 }
-void MusicLoader::playSound(std::string fileName)
+
+void MusicLoader::update()
 {
-	if (!buffer.loadFromFile("res/audio/"+fileName+".wav"))
+	for (int i = 0; i < soundInstances.size(); ++i)
+	{
+		if (soundInstances[i].getStatus() == sf::Sound::Stopped)
+		{
+			soundInstances.erase(soundInstances.begin() + i);
+			--i;
+		}
+	}
+}
+void MusicLoader::loadSound(std::string fileName)
+{
+	if (!buffer.loadFromFile("res/audio/" + fileName + ".wav"))
 	{
 		exit(0);
 	}
-	sound.setBuffer(buffer);
-	sound.setVolume(_soundVolume);
-	sound.play();
+}
+void MusicLoader::playSound()
+{	
+	soundInstances.push_back(sf::Sound(buffer));
+	soundInstances.back().setVolume(_soundVolume);
+	soundInstances.back().play();
 }
