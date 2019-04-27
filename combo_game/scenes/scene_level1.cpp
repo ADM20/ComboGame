@@ -5,6 +5,7 @@
 #include "../components/cmp_bar_movement.h"
 #include "../components/cmp_hp.h"
 #include "../components/cmp_attack.h"
+#include "../FighterFactory.h"
 #include "../game.h"
 #include <LevelSystem.h>
 #include <iostream>
@@ -13,7 +14,6 @@
 
 using namespace std;
 using namespace sf;
-Vector2f barSize(100, 10);
 
 static shared_ptr<Entity> player;
 static shared_ptr<Entity> playerHP;
@@ -25,6 +25,8 @@ static shared_ptr<Entity> enemyHP;
 
 static double tempoTime = .48;//time between beats
 Texture spritesheet;
+
+
 void Level1Scene::Load() {
 	std::cout << " Scene 1 Load" << endl;//debug
 
@@ -40,33 +42,7 @@ void Level1Scene::Load() {
 	Vector2f playerSize(150.f, 300.f);
 	// Create player
 	{
-		if (!spritesheet.loadFromFile("res/img/invaders/invaders_sheet.png")) {
-			cerr << "Failed to load spritesheet!" << std::endl;
-		}
-		auto rect = IntRect(32, 0, 32, 32);
-		player = makeEntity();
-		player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
-		//add sprites
-		auto s = player->addComponent<ShapeComponent>();
-		//pSprite->setTexure(Resources::get<Texture>("res/img/char_3.png"));
-		s->setShape<sf::RectangleShape>(playerSize);
-		s->getShape().setFillColor(Color::Magenta);
-		s->getShape().setOrigin(playerSize.x / 2, playerSize.y / 2);
-		//add movement
-		player->addComponent<ActorMovementComponent>();
-
-
-
-		//bar to show HP
-		playerHP = makeEntity();
-		auto hp = playerHP->addComponent<ShapeComponent>();
-
-		//add HP
-		player->addComponent<HitPointsComponent>(100);
-		player->GetCompatibleComponent<HitPointsComponent>()[0]->setBar(playerHP, Color::Green);
-
-		//set enemy as target of attacks
-		player->addComponent<AttackComponent>(enemy);
+		player = FighterFactory::newPlayer(player, playerHP, spritesheet, playerSize, enemy, dynamic_cast<Scene*>(level1));
 	}
 
 	//create enemy
