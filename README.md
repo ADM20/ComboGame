@@ -20,3 +20,5 @@ A game by Adam Parsley and Daniel Korsah
 - [hack'n'plan](https://app.hacknplan.com/p/89764/kanban?categoryId=0&boardId=229614)
 
 - [Moodle](https://moodle.napier.ac.uk/course/view.php?id=28474)
+
+-[Itchio](https://adm20.itch.io/beat-brawler)
