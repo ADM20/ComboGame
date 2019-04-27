@@ -60,14 +60,10 @@ void Level1Scene::Load() {
 		//bar to show HP
 		playerHP = makeEntity();
 		auto hp = playerHP->addComponent<ShapeComponent>();
-		hp->setShape<sf::RectangleShape>(barSize);
-		hp->getShape().setFillColor(Color::Green);
-		hp->getShape().setOrigin(barSize.x / 2, barSize.y / 2);
-		playerHP->setPosition({ player->getPosition().x, player->getPosition().y -200 });
 
 		//add HP
 		player->addComponent<HitPointsComponent>(100);
-		player->GetCompatibleComponent<HitPointsComponent>()[0]->setBar(playerHP);
+		player->GetCompatibleComponent<HitPointsComponent>()[0]->setBar(playerHP, Color::Green);
 
 		//set enemy as target of attacks
 		player->addComponent<AttackComponent>(enemy);
@@ -93,19 +89,15 @@ void Level1Scene::Load() {
 		//bar to show HP
 		enemyHP = makeEntity();
 		auto hp = enemyHP->addComponent<ShapeComponent>();
-		hp->setShape<sf::RectangleShape>(barSize);
-		hp->getShape().setFillColor(Color::Red);
-		hp->getShape().setOrigin(barSize.x / 2, barSize.y / 2);
-		enemyHP->setPosition({ enemy->getPosition().x, enemy->getPosition().y - 200 });
 
 		//add HP
 		enemy->addComponent<HitPointsComponent>(100);
-		enemy->GetCompatibleComponent<HitPointsComponent>()[0]->setBar(enemyHP);
+		enemy->GetCompatibleComponent<HitPointsComponent>()[0]->setBar(enemyHP, Color::Red);
 
 		//set it to attack the player
 		enemy->addComponent<AttackComponent>(player);
 
-		enemy->GetCompatibleComponent<AttackComponent>()[0]->Attack(80);
+		enemy->GetCompatibleComponent<AttackComponent>()[0]->Attack(-50);
 	}
 
 

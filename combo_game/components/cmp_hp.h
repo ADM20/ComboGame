@@ -13,13 +13,14 @@ protected:
 	int _hp;
 	shared_ptr<Entity> _bar;
 	shared_ptr<Entity> _self;
+	Color _barCol;
 
 public:
 	void update(double dt) override;
 	void render() override {}
 	explicit HitPointsComponent(Entity* p, int startHP);
 	HitPointsComponent() = delete;
-	void setBar(shared_ptr<Entity> bar);
+	void setBar(shared_ptr<Entity> bar, Color c);
 
 	int getHP();
 	void changeHP(int amount);

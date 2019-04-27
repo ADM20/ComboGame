@@ -19,22 +19,28 @@ int HitPointsComponent::getHP()
 void HitPointsComponent::changeHP(int amount)
 {
 	_hp += amount;
+	cout << "new hp = " << _hp << endl;
 }
 
-void HitPointsComponent::setBar(shared_ptr<Entity> bar)
+void HitPointsComponent::setBar(shared_ptr<Entity> bar, Color c)
 {
 	cout << "bar set" << endl;
 	_bar = bar;
+	_barCol = c;
 }
 
 void HitPointsComponent::update(double dt)
 {
-	double percentage = (_hp / 100);
+	float percentage = (_hp / 100);
 
 	Vector2f barSize(100, 10);
-	Vector2f displayBarSize(barSize.x, barSize.y * percentage);
+	Vector2f displayBarScale(percentage, 1);
 
-	
+	Vector2f output = barSize * displayBarScale;
+	auto b = _bar->GetCompatibleComponent<ShapeComponent>()[0];
+	b->setShape<sf::RectangleShape>(output);
+	b->getShape().setFillColor(_barCol);
+	b->getShape().setOrigin(barSize.x / 2, barSize.y / 2);
 
 	_bar->setPosition({_parent->getPosition().x, _parent->getPosition().y - 200});
 }
