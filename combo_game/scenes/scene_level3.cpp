@@ -22,6 +22,9 @@ static double tempoTime = .48;//time between beats
 
 void Level3Scene::Load() {
 	std::cout << " Scene 3 Load" << endl;//debug
+	//increment levels unlocked
+	if (SaveSystem::levelUnlocked < 3)
+		SaveSystem::levelUnlocked = 3;
 
 	ls::loadLevelFile("res/level_3.txt", 40.0f); //load level file 1
 

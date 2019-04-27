@@ -26,8 +26,20 @@ static shared_ptr<Entity> enemyHP;
 static double tempoTime = .48;//time between beats
 Texture spritesheet;
 
+vector<InputManager::Input> actionQueue;
+int attackDamage = 5;
+int missDamage = 10;
+
 
 void Level1Scene::Load() {
+
+	//increment levels unlocked
+	if(SaveSystem::levelUnlocked<1)
+		SaveSystem::levelUnlocked = 1;
+
+	//load sequence of required moves
+	actionQueue = { InputManager::Up, InputManager::Down, InputManager::LightPunch, InputManager::Up, InputManager::Down, InputManager::LightPunch, InputManager::Up, InputManager::Down, InputManager::LightPunch, InputManager::Up, InputManager::Down, InputManager::LightPunch, InputManager::Up, InputManager::Down, InputManager::LightPunch, InputManager::Up, InputManager::Down, InputManager::LightPunch, InputManager::Up, InputManager::Down, InputManager::LightPunch };
+
 	std::cout << " Scene 1 Load" << endl;//debug
 
 	ls::loadLevelFile("res/level_1.txt", 40.0f); //load level file 1
@@ -49,7 +61,7 @@ void Level1Scene::Load() {
 	{
 		enemy = FighterFactory::newEnemy(enemy, enemyHP, spritesheet, playerSize, player, this);
 
-		enemy->GetCompatibleComponent<AttackComponent>()[0]->Attack(50);
+		//enemy->GetCompatibleComponent<AttackComponent>()[0]->Attack(attackDamage);
 	}
 
 
@@ -113,6 +125,8 @@ void Level1Scene::Update(const double& dt) {
 		MusicLoader::playSound();
 		exit(0);
 	}
+
+	
 
 	//if(enemyHP < 0)
 	//{
