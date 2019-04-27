@@ -146,8 +146,9 @@ void Level1Scene::Update(const double& dt) {
 		else
 		{
 			enemy->GetCompatibleComponent<AttackComponent>()[0]->Attack(missDamage);
+			flag = false;
 		}
-		flag = false;
+		
 	}
 
 	
