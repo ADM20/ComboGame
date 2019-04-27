@@ -47,31 +47,7 @@ void Level1Scene::Load() {
 
 	//create enemy
 	{
-		if (!spritesheet.loadFromFile("res/img/invaders/invaders_sheet.png")) {
-			cerr << "Failed to load spritesheet!" << std::endl;
-		}
-		auto rect = IntRect(32, 0, 32, 32);
-		enemy = makeEntity();
-		enemy->setPosition(ls::getTilePosition(ls::findTiles(ls::END)[0]));
-		//add sprites
-		auto s = enemy->addComponent<ShapeComponent>();
-		//pSprite->setTexure(Resources::get<Texture>("res/img/char_3.png"));
-		s->setShape<sf::RectangleShape>(playerSize);
-		s->getShape().setFillColor(Color::Yellow);
-		s->getShape().setOrigin(playerSize.x / 2, playerSize.y / 2);
-		//add movement
-		enemy->addComponent<ActorMovementComponent>();
-
-		//bar to show HP
-		enemyHP = makeEntity();
-		auto hp = enemyHP->addComponent<ShapeComponent>();
-
-		//add HP
-		enemy->addComponent<HitPointsComponent>(100);
-		enemy->GetCompatibleComponent<HitPointsComponent>()[0]->setBar(enemyHP, Color::Red);
-
-		//set it to attack the player
-		enemy->addComponent<AttackComponent>(player);
+		enemy = FighterFactory::newPlayer(enemy, enemyHP, spritesheet, playerSize, player, this);
 
 		enemy->GetCompatibleComponent<AttackComponent>()[0]->Attack(50);
 	}
