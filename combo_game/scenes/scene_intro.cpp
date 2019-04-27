@@ -17,11 +17,11 @@ void IntroScene::Load() {
   cout << "Menu Load \n";
   {
 	 
-	  static Text t("COMBO TRAINER\nPRESS SPACE", *Resources::get<sf::Font>("RobotoMono-Regular.ttf"));
-	  t.setFillColor(Color(100, 255, 255));
+	  static Text t("BEAT BRAWLER\nPRESS SPACE", *Resources::get<sf::Font>("RobotoMono-Regular.ttf"));
+	  t.setFillColor(Color::Red);
 	  t.setPosition(Vcast<float>(Engine::getWindowSize()) * Vector2f(0.25f, 0.25f));
 	  t.setCharacterSize(75);
-	  t.setOutlineThickness(2);
+	  t.setOutlineThickness(5);
 	  t.setOutlineColor(sf::Color::White);
 	  Renderer::queue(&t);
 	 
