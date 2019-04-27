@@ -10,6 +10,7 @@ Level2Scene level2;
 Level3Scene level3;
 OptionsScene optionsMenu;
 IntroScene intro;
+KeybindsScene keybinds;
 
 
 int main() {
