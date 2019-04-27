@@ -24,14 +24,13 @@ void HitPointsComponent::changeHP(int amount)
 
 void HitPointsComponent::setBar(shared_ptr<Entity> bar, Color c)
 {
-	cout << "bar set" << endl;
 	_bar = bar;
 	_barCol = c;
 }
 
 void HitPointsComponent::update(double dt)
 {
-	float percentage = (_hp / 100);
+	float percentage = (_hp / 100.0f);
 
 	Vector2f barSize(100, 10);
 	Vector2f displayBarScale(percentage, 1);

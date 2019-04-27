@@ -97,7 +97,7 @@ void Level1Scene::Load() {
 		//set it to attack the player
 		enemy->addComponent<AttackComponent>(player);
 
-		enemy->GetCompatibleComponent<AttackComponent>()[0]->Attack(-50);
+		enemy->GetCompatibleComponent<AttackComponent>()[0]->Attack(50);
 	}
 
 
