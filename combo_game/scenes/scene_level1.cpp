@@ -32,7 +32,7 @@ static int missDamage = 10;
 
 
 bool inputAllowed = true;//used to check if a key has already been pressed to stop multiple inputs
-
+static bool flag = true;
 
 void Level1Scene::Load() {
 
@@ -131,12 +131,12 @@ void Level1Scene::Update(const double& dt) {
 	}
 
 	
-	if (!inputAllowed && !InputManager::getBool())//allows an input again
+	if (!flag && !InputManager::getBool())//allows an input again
 	{
 		inputAllowed = true;
 	}
 	//if a bound input is pressed
-	if (InputManager::getBool() && inputAllowed == true)
+	if (InputManager::getBool() && flag == true)
 	{
 		
 		if (Fight::hit(InputManager::InputPressed))
@@ -147,7 +147,7 @@ void Level1Scene::Update(const double& dt) {
 		{
 			enemy->GetCompatibleComponent<AttackComponent>()[0]->Attack(missDamage);
 		}
-		
+		flag = false;
 	}
 
 	

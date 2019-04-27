@@ -6,7 +6,7 @@ using namespace sf;
 using namespace std;
 
 
-bool flag = true;//used to check if a key has already been pressed to stop multiple inputs
+static bool flag = true;//used to check if a key has already been pressed to stop multiple inputs
 
 void ActorMovementComponent::update(double dt) 
 {
