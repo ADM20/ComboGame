@@ -41,13 +41,13 @@ void KeybindsScene::Update(const double& dt) {
 				case sf::Keyboard::Num2:
 					MusicLoader::loadSound("bleep");
 					MusicLoader::playSound();
-					InputManager::RebindKey(InputManager::Input::Down,sf::Keyboard::Y);
+					InputManager::RebindKey(InputManager::Input::Down, rebind = event.key.code);
 					flag = false;
 					break;
 				case sf::Keyboard::Num3:
 					MusicLoader::loadSound("bleep");
 					MusicLoader::playSound();
-					InputManager::RebindKey(InputManager::Input::Left, sf::Keyboard::U);
+					InputManager::RebindKey(InputManager::Input::Left, rebind = event.key.code);
 					flag = false;
 					break;
 				case sf::Keyboard::Num4:
@@ -59,36 +59,50 @@ void KeybindsScene::Update(const double& dt) {
 				case sf::Keyboard::Num5:
 					MusicLoader::loadSound("bleep");
 					MusicLoader::playSound();
+					InputManager::RebindKey(InputManager::Input::LightKick, rebind = event.key.code);
+
 					flag = false;
 					break;
 				case sf::Keyboard::Num6:
 					MusicLoader::loadSound("bleep");
 					MusicLoader::playSound();
+					InputManager::RebindKey(InputManager::Input::MediumKick, rebind = event.key.code);
+
 					flag = false;
 					break;
 				case sf::Keyboard::Num7:
 					MusicLoader::loadSound("bleep");
 					MusicLoader::playSound();
+					InputManager::RebindKey(InputManager::Input::HeavyKick, rebind = event.key.code);
+
 					flag = false;
 					break;
 				case sf::Keyboard::Num8:
 					MusicLoader::loadSound("bleep");
 					MusicLoader::playSound();
+					InputManager::RebindKey(InputManager::Input::LightPunch, rebind = event.key.code);
+
 					flag = false;
 					break;
 				case sf::Keyboard::Num9:
 					MusicLoader::loadSound("bleep");
 					MusicLoader::playSound();
+					InputManager::RebindKey(InputManager::Input::MediumPunch, rebind = event.key.code);
+
 					flag = false;
 					break;
 				case sf::Keyboard::LBracket:
 					MusicLoader::loadSound("bleep");
 					MusicLoader::playSound();
+					InputManager::RebindKey(InputManager::Input::HeavyPunch, rebind = event.key.code);
+
 					flag = false;
 					break;
 				case sf::Keyboard::RBracket:
 					MusicLoader::loadSound("bleep");
 					MusicLoader::playSound();
+					InputManager::RebindKey(InputManager::Input::Confirm, rebind = event.key.code);
+
 					flag = false;
 					break;
 				case sf::Keyboard::R:
