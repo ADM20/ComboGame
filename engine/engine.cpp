@@ -111,6 +111,7 @@ void Engine::Start(unsigned int width, unsigned int height,
 	
     window.clear();
 	InputManager::Update();
+	MusicLoader::update();
     Update();
     Render(window);
     window.display();

@@ -33,23 +33,27 @@ void MenuScene::Update(const double& dt) {
 				switch (event.key.code)
 				{
 				case sf::Keyboard::Num1:
-					MusicLoader::playSound("bleep");
+					MusicLoader::loadSound("bleep");
+					MusicLoader::playSound();
 					Engine::ChangeScene(&level1);
 					flag = false;
 					break;
 
 				case sf::Keyboard::Num2:
-					MusicLoader::playSound("bleep");
+					MusicLoader::loadSound("bleep");
+					MusicLoader::playSound();
 					Engine::ChangeScene(&loadScene);
 					flag = false;
 					break;
 				case sf::Keyboard::Num3:
-					MusicLoader::playSound("bleep");
+					MusicLoader::loadSound("bleep");
+					MusicLoader::playSound();
 					Engine::ChangeScene(&optionsMenu);
 					flag = false;
 					break;
 				case sf::Keyboard::Q:
-					MusicLoader::playSound("bloop");
+					MusicLoader::loadSound("bleep");
+					MusicLoader::playSound();
 					exit(1);
 					flag = false;
 					break;

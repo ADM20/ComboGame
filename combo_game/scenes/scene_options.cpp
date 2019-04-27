@@ -32,21 +32,25 @@ void OptionsScene::Update(const double& dt) {
 				switch (event.key.code)
 				{
 				case sf::Keyboard::Num1:
-					MusicLoader::playSound("bleep");
+					MusicLoader::loadSound("bleep");
+					MusicLoader::playSound();
 					//call keybind scene
 					flag = false;
 					break;
 				case sf::Keyboard::Num2:
-					MusicLoader::playSound("bleep");
+					MusicLoader::loadSound("bleep");
+					MusicLoader::playSound();				
 					//call resolution selection scene
 					flag = false;
 					break;
 				case sf::Keyboard::Num3:
-					MusicLoader::playSound("bleep");
+					MusicLoader::loadSound("bleep");
+					MusicLoader::playSound();
 					flag = false;
 					break;
 				case sf::Keyboard::R:
-					MusicLoader::playSound("bloop");
+					MusicLoader::loadSound("bloop");
+					MusicLoader::playSound();
 					Engine::ChangeScene(&menu);
 					flag = false;
 					break;

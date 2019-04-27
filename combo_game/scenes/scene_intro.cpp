@@ -45,7 +45,8 @@ void IntroScene::Update(const double& dt) {
 				switch (event.key.code)
 				{
 				case sf::Keyboard::Space:
-					MusicLoader::playSound("bleep");
+					MusicLoader::loadSound("bleep");
+					MusicLoader::playSound();
 					Engine::ChangeScene(&menu);
 					flag = false;
 					break;

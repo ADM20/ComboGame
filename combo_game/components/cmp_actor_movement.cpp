@@ -34,7 +34,10 @@ void ActorMovementComponent::update(double dt)
 											}
 					flag = false; // key pressed
 					//play a sound
-					MusicLoader::playSound("bloop");
+					{
+						MusicLoader::loadSound("bloop");
+						MusicLoader::playSound();
+					}
 				}
 	}
 
@@ -43,7 +46,6 @@ ActorMovementComponent::ActorMovementComponent(Entity* p)
 
 bool ActorMovementComponent::validMove(const sf::Vector2f& pos) 
 {
-	std::cout << pos << std::endl;
 	if (pos.x <= 100.f)
 	{
 		return false;
