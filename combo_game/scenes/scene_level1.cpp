@@ -47,7 +47,7 @@ void Level1Scene::Load() {
 
 	//create enemy
 	{
-		enemy = FighterFactory::newPlayer(enemy, enemyHP, spritesheet, playerSize, player, this);
+		enemy = FighterFactory::newEnemy(enemy, enemyHP, spritesheet, playerSize, player, this);
 
 		enemy->GetCompatibleComponent<AttackComponent>()[0]->Attack(50);
 	}
