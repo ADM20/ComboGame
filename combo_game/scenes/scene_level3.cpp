@@ -1,4 +1,5 @@
 #include "scene_level1.h"
+#include "../components/cmp_obar_movement.h"
 #include "../components/cmp_player_physics.h"
 #include "../components/cmp_sprite.h"
 #include "../components/cmp_actor_movement.h"
@@ -25,13 +26,11 @@ static shared_ptr<Entity> enemy;
 static shared_ptr<Entity> enemyHP;
 
 static double tempoTime = .48;//time between beats
-Texture spritesheet;
+static Texture spritesheet;
+static int attackDamage = 5;
+static int missDamage = 10;
 
-
-int attackDamage = 5;
-int missDamage = 10;
-
-bool inputAllowed = true;//used to check if a key has already been pressed to stop multiple inputs
+bool inputAllowed3 = true;//used to check if a key has already been pressed to stop multiple inputs
 
 
 void Level3Scene::Load() {

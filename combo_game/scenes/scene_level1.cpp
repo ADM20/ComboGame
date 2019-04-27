@@ -25,11 +25,11 @@ static shared_ptr<Entity> enemy;
 static shared_ptr<Entity> enemyHP;
 
 static double tempoTime = .48;//time between beats
-Texture spritesheet;
+static Texture spritesheet;
 
+static int attackDamage = 5;
+static int missDamage = 10;
 
-int attackDamage = 5;
-int missDamage = 10;
 
 bool inputAllowed = true;//used to check if a key has already been pressed to stop multiple inputs
 

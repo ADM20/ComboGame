@@ -1,4 +1,5 @@
 #include "scene_level1.h"
+#include "../components/cmp_obar_movement.h"
 #include "../components/cmp_player_physics.h"
 #include "../components/cmp_sprite.h"
 #include "../components/cmp_actor_movement.h"
@@ -25,6 +26,12 @@ static shared_ptr<Entity> enemy;
 static shared_ptr<Entity> enemyHP;
 
 static double tempoTime = .48;//time between beats
+static Texture spritesheet;
+static int attackDamage = 5;
+static int missDamage = 10;
+
+bool inputAllowed2 = true;//used to check if a key has already been pressed to stop multiple inputs
+
 
 void Level2Scene::Load() {
 	std::cout << " Scene 2 Load" << endl;//debug
@@ -39,7 +46,7 @@ void Level2Scene::Load() {
 	auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
 	ls::setOffset(Vector2f(0, ho));
 
-	Vector2f playerSize(150.f, 300.f);
+	
 	Vector2f playerSize(150.f, 300.f);
 	// Create player
 	{
