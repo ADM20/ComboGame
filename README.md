@@ -21,4 +21,4 @@ A game by Adam Parsley and Daniel Korsah
 
 - [Moodle](https://moodle.napier.ac.uk/course/view.php?id=28474)
 
--[Itchio](https://adm20.itch.io/beat-brawler)
+- [Itchio](https://adm20.itch.io/beat-brawler)
